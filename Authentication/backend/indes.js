@@ -72,6 +72,56 @@ app.post( "/registration" , async ( request , response ) => {
 
 } );
 
+app.post("/login" , async ( request , resolve ) => {
+
+    try{
+        //getting data from the frontEnd to login 
+        const {email , password } = await request.body ;
+
+        //checking validation 
+        //first checking all the data should be provided 
+        if( !( email && password )){
+            return resolve.status(400).send("Please fill all the required Data") ;
+        }
+
+        //checking , is there any user the the given Email or not 
+        const user = await User.findOne({email}) ;
+        if( !user ){
+            return resolve.status(400).send("User not found with the give Email") ;
+        }
+
+        //checking is the password correct or not 
+        const isPasswordCorrect = await bcrypt.compare( password , user.password ) ;
+        if( !isPasswordCorrect ){
+            return resolve.status(400).send("Wrong Password") ;
+        }
+
+        const token = jwt.sign({id: user._id , email} , process.env.SecretKey , {
+            expiresIn : '1h' ,
+        }) ;
+
+        user.token = token  ;
+        user.password = undefined ;
+
+        //cookies
+        const option = {
+            expires : new Date( Date.now() + 1*24*60*60*1000 ) ,
+            httpOnly: true ,
+        }
+
+        //sending cookies
+        resolve.status(200).cookie("OJ_token" , token , option ).json({
+            message : "You have successfully Login" , 
+            success : true ,
+            token ,
+        });
+    }
+    catch( error ){
+        console.log(error) ;
+    } 
+
+} );
+
 app.listen( process.env.PORT , () => {
     console.log( `The server is lisning from ${process.env.PORT}`) ;
 });
