@@ -17,22 +17,22 @@ DBConnection() ;
 app.use(express.json()) ;
 app.use(express.urlencoded({extended : true})) ;
 
-app.get("/" , ( request , response ) => {
-    response.send("Wasim wellCome to the world of develoopment") ;
+app.get("/" , ( req , res ) => {
+    res.send("Wasim wellCome to the world of develoopment") ;
 });
 
-app.post( "/registration" , async ( request , response ) => {
+app.post( "/registration" , async ( req , res ) => {
 
     try{
         //getting the data required for registration
         //front the User by frontend 
-        const {firstName , lastName , email , password } =  await request.body ;
+        const {firstName , lastName , email , password } =  req.body ;
 
 
         //checking all the provided 
         //hence every required data is filld by the user
         // if( !(firstName && lastName && email && password ) ){
-        //     return response.status(400).send("please fill all the required data") ;
+        //     return res.status(400).send("please fill all the required data") ;
         // }
 
 
@@ -41,7 +41,7 @@ app.post( "/registration" , async ( request , response ) => {
         //checking if the userdId ( email ) already exist 
         const isUserExist = await User.findOne({email}) ;
         if( isUserExist ){
-            return response.status(400).send("User already exist with the given Email") ;
+            return res.status(400).send("User already exist with the given Email") ;
         }
 
         //hashing/encrypt the password 
@@ -63,7 +63,7 @@ app.post( "/registration" , async ( request , response ) => {
 
         user.token = token  ;
         user.password = undefined ;
-        response.status(200).json( {message : ' you have successfully registerd ' , user }) ;
+        res.status(200).json( {message : ' you have successfully registerd ' , user }) ;
     }
     catch(err){
         console.log("something wrong " , err ) ;
@@ -72,28 +72,28 @@ app.post( "/registration" , async ( request , response ) => {
 
 } );
 
-app.post("/login" , async ( request , resolve ) => {
+app.post("/login" , async ( req , res ) => {
 
     try{
         //getting data from the frontEnd to login 
-        const {email , password } = await request.body ;
+        const {email , password } = await req.body ;
 
         //checking validation 
         //first checking all the data should be provided 
         if( !( email && password )){
-            return resolve.status(400).send("Please fill all the required Data") ;
+            return res.status(400).send("Please fill all the required Data") ;
         }
 
         //checking , is there any user the the given Email or not 
         const user = await User.findOne({email}) ;
         if( !user ){
-            return resolve.status(400).send("User not found with the give Email") ;
+            return res.status(400).send("User not found with the give Email") ;
         }
 
         //checking is the password correct or not 
         const isPasswordCorrect = await bcrypt.compare( password , user.password ) ;
         if( !isPasswordCorrect ){
-            return resolve.status(400).send("Wrong Password") ;
+            return res.status(400).send("Wrong Password") ;
         }
 
         const token = jwt.sign({id: user._id , email} , process.env.SecretKey , {
@@ -110,7 +110,7 @@ app.post("/login" , async ( request , resolve ) => {
         }
 
         //sending cookies
-        resolve.status(200).cookie("OJ_token" , token , option ).json({
+        res.status(200).cookie("OJ_token" , token , option ).json({
             message : "You have successfully Login" , 
             success : true ,
             token ,
