@@ -23,6 +23,12 @@ const userSchema = new mangoose.Schema({
         require : true ,
     },
 
+    role : {
+        type : String ,
+        default : "user" ,
+        require : true ,
+    }
+
 }); 
 
 // The last will create a table name as <User> through userSchema 
