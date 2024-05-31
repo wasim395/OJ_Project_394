@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import styles from './Problems.module.css' ;
 
 
-export default function problem({match}){
+export default function problem(){
 
     const params = useParams();
     const problemId = params.id ;
@@ -19,8 +19,13 @@ export default function problem({match}){
             console.log( problemId ) ;
 
             try{
-                const req = await axios.get( `http://localhost:5000/problem/${problemId}` , {withCredentials : true} ) ;
-                setProblem( req.data ) ;
+                const req = await axios.get(`http://localhost:5000/problem/${problemId}`, { withCredentials: true });
+
+                console.log("hellow world  ")
+                console.log( req.data ) ;
+                const newProblem = req.data ;
+                setProblem( newProblem ) ;
+                console.log("hellow world  ")
             }
             catch(error){
                 console.log( "Error while problem fetching in problem route " , error ) ; 

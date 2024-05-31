@@ -36,7 +36,7 @@ const authenticate = async (req, res, next) => {
     // const token = req.header('Authorization');
     // const token = req.headers.authorization?.split(' ')[1] || req.query.token || req.cookies.token;
     const token = req.cookies.token;
-    console.log("token")
+    // console.log("token")
 
   
     // if (!token) {
@@ -44,12 +44,12 @@ const authenticate = async (req, res, next) => {
     // }
   
     try {
-        console.log("checking token ") ;
+        // console.log("checking token ") ;
         const decoded = jwt.verify(token, process.env.SecretKey );
         req.user = await User.findById(decoded.id)
         next();
     } catch (error) {
-        console.log(" the token is not correct ")
+        // console.log(" the token is not correct ")
         return res.status(401).json({ message: 'Invalid token' });
     }
 }
@@ -171,11 +171,10 @@ app.post("/login" , async ( req , res ) => {
 app.get( "/problem/:id" , authenticate , async (req , res ) => {
 
     try{
-        const problemId = parseInt(req.params.id  , 10) ;
-        const currProblem = await Problems.findOne({id : problemId }) ;
-       
-        res.json(currProblem) ;
-        
+        const problemId = req.params.id  ;
+        // console.log( problemId ) ;
+        const currProblem = await Problems.findOne( {_id : problemId } ) ;
+        res.json(currProblem) ; 
     }
     catch(error){
         console.log(error) ;
@@ -194,14 +193,84 @@ app.get('/logout', (req, res) => {
 });
 
 //Admin
-app.get('/admin' , authenticate , async (req , res) => {
-
-    if (req.user.role !== 'admin' ) {
-        return res.status(403).send(false);
+const checkAdmin = async (req, res, next) => {
+    try {
+        // console.log(req.user.role);
+        if (req.user.role === "admin") {
+            next();
+        } else {
+            res.status(403).send("Forbidden: You do not have the necessary permissions.");
+        }
+    } catch (error) {
+        res.status(500).send("Internal Server Error: Something went wrong while checking admin.");
     }
-    res.status(200).send(true);
+};
+app.get('/admin' , authenticate , checkAdmin , async (req , res) => {
+
+    try{
+        const adminId = req.user._id ;
+        const problemList = await Problems.find( {createdBy : adminId} ) ;
+        res.status(200).json( problemList )
+    }
+    catch(error){
+        res.status(500).send("catch /admin " , error ) ;
+    }
+
 
 });
+app.post( "/admin/create" , authenticate , checkAdmin , async ( req , res ) => {
+    
+    const creater = req.user._id ;
+    // console.log("the creater id is : " , creater ) ;
+    const {title , problemStatement , explainInput , explainOutput , testCases } = req.body ;
+    const newProblem = await Problems.create({
+        title : title ,
+        problemStatement : problemStatement ,
+        expectedInput : explainInput ,
+        expectedOutput : explainOutput ,
+        testCase : testCases,
+        createdBy : creater ,
+    });
+    // console.log( newProblem ) ;
+    res.send(200) ;
+
+})
+app.put('/admin/edit/:id', authenticate , checkAdmin , async (req, res) => {
+
+    const { title, problemStatement, explainInput, explainOutput, testCases } = req.body;
+  
+    try {
+      const problem = await Problems.findById(req.params.id);
+      if (!problem) {
+        return res.status(404).send({ error: 'Problem not found' });
+      }
+  
+        problem.title = title;
+        problem.problemStatement = problemStatement;
+        problem.expectedInput = explainInput ;
+        problem.expectedOutput = explainOutput ;
+        problem.testCase = testCases ;
+    
+        await problem.save();
+  
+      res.status(200).send({ message: 'Document updated successfully' });
+    } catch (error) {
+      res.status(500).send({ error: 'Error updating the problem' });
+    }
+});
+app.delete('/admin/delete/:id', async (req, res) => {
+    try {
+      const result = await Problems.deleteOne({ _id: req.params.id });
+      if (result.deletedCount === 0) {
+        return res.status(404).send({ error: 'Problem not found' });
+      }
+      res.status(200).send({ message: 'Problem deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting problem:', error);
+      res.status(500).send({ error: 'Error deleting the problem' });
+    }
+  });
+
 
 //create by admin 
 //update by admin

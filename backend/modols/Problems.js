@@ -1,25 +1,36 @@
 const mongoose = require("mongoose")
 
 const ProblemSchema = new mongoose.Schema({
-    
-    id: {
-        type : Number ,
-        default : null , 
-        require : true ,
-    },
 
     title : {
         type : String ,
         default : null , 
-        require : true ,
     },
 
     problemStatement : {
         type : String , 
         default : null ,
-        require : true ,
     },
 
+    expectedInput : {
+        type : String ,
+        default : null ,
+    }, 
+
+    expectedOutput : {
+        type : String ,
+        default : null ,
+    },
+
+    testCase : [{
+        input: { type: String },
+        output: { type: String },
+    }],
+
+    createdBy : {
+        type : String , 
+        default : null ,
+    }
 
 });
 

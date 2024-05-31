@@ -6,6 +6,8 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Problem from './pages/Problems'
 import Admin from './pages/Admin'
+import Create from './pages/AdminFuntion/create'
+import Edit from './pages/AdminFuntion/edit'
 
 function App() {
 
@@ -16,8 +18,10 @@ function App() {
         <Route path='/' element={<Home/>} /> 
         <Route path='/register' element={<Register/>} /> 
         <Route path='/login' element={<Login/>} /> 
-        <Route path='/problem/:id' id={`100`} element={<Problem/>} />
+        <Route path='/problem/:id' element={<Problem/>} />
         <Route path='/admin' element={<Admin/>} />
+        <Route path='/admin/create' element={<Create/>} />
+        <Route path='/admin/edit/:id' element={<Edit/>} />
       </Routes>
     </>
   )

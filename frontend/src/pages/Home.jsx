@@ -35,10 +35,9 @@ export default function Home() {
           Problem.map( (problem) => {
             return(     
               <div className={style.problemItem}>
-                <Link to={`/problem/${problem.id}`} className={style.link}> 
-                {problem.id} : {problem.title} </Link>
-
-
+    
+                <Link to={`/problem/${problem._id}`} className={style.link}> 
+                {problem.title} </Link>
 
               </div>                 
             )

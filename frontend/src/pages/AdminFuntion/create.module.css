@@ -1,0 +1,223 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Form */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type='text'],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  /* Test Case Container */
+  .testCaseContainer {
+    margin-top: 50px;
+  }
+  
+  .testCaseForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .testCaseForm1 {
+    flex-grow: 1;
+  }
+  
+  .testCaseFormDiv {
+    margin-bottom: 10px;
+  }
+  
+  .testCaseFormTextarea {
+    width: 100%;
+  }
+  
+  .addButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Test Case List */
+  .testCaseList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .testCaseListLi {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .testCaseListLiC {
+    flex: 0 0 40%;
+    padding: 10px;
+  }
+  
+  .deleteButton {
+    flex: 1;
+    text-align: right;
+    color: red;
+    cursor: pointer;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Form */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input[type='text'],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  /* Test Case Container */
+  .testCaseContainer {
+    margin-top: 50px;
+  }
+  
+  .testCaseForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .testCaseForm1 {
+    margin: 5px ;
+    flex-grow: 1;
+  }
+  
+  .testCaseFormDiv {
+    margin-bottom: 10px;
+  }
+  
+  .testCaseFormTextarea {
+    width: 100%;
+  }
+  
+  .addButton {
+    margin-top : 1.3rem ;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .addButton:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Test Case List */
+  .testCaseList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .testCaseListLi {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    
+  }
+  
+  .testCaseListLiC {
+    word-break: break-word;
+    overflow-x: hidden;
+    max-height: 300px; /* Set a maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    margin : 10px;
+    border-radius:2px ;
+  }
+  
+  .deleteButton {
+    flex: 1;
+    text-align: center;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    margin : .5rem ;
+    border-radius: 5px ;
+    padding: 0.5rem ;
+  }
+
+  .formSubitContainer {
+    display: flex;
+    align-items: center; /* Center align all items horizontally */
+    justify-content: center; /* Center align all items vertically if needed */
+    
+  }
+
+  .formSubmit {
+
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px; /* Increased padding */
+    border: none;
+    border-radius: 5px; /* Slightly larger border radius */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px; /* Larger font size */
+    text-align: center;
+    display: inline-block;
+    margin: 10px 0; /* Margin for spacing */
+    width: 200px; /* Set a larger width */
+  }
+  
+  .formSubmit:hover {
+    background-color: #0056b3;
+  }
+  
