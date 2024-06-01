@@ -12,16 +12,16 @@ if (!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
 }
 
-const executeCpp = async ( filePath ) => {
+const executeCpp = async ( filePath , fileInputPath ) => {
 
     const jobId = path.basename(filePath).split(".")[0] ;// basename take only last abc/xyx/last 
-    const outputFileName = '${jobId}.out' ;
+    const outputFileName = `${jobId}.exe` ;
     const outputFileNamePath = path.join(outputPath , outputFileName ) ;
 
     return new Promise( (resolve ,reject ) => {
 
-        exec( `g++ ${filePath} -o ${outputFileNamePath} && cd ${outputPath} && ./${outputFileName}` , ( error , stdout , stderr ) => {
-            
+        exec( `g++ ${filePath} -o ${outputFileNamePath} && cd ${outputPath} && .\\${outputFileName} < ${fileInputPath}` , ( error , stdout , stderr ) => {
+
             if( error ){
                 reject(error) ;
             }

@@ -1,63 +1,118 @@
-import React from "react";
-import {useState , useEffect } from 'react' ;
-import axios from 'axios' ;
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import styles from './Problems.module.css' ;
+import styles from './Problems.module.css';
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-c_cpp';
+import 'ace-builds/src-noconflict/theme-monokai';
+import 'ace-builds/src-noconflict/ext-language_tools';
+import 'ace-builds/src-noconflict/snippets/c_cpp';
 
-
-export default function problem(){
-
+export default function Problem() {
     const params = useParams();
-    const problemId = params.id ;
+    const problemId = params.id;
 
-    const [ problemData , setProblem ] = useState({}) ;
+    const [problemData, setProblem] = useState({});
+    const [input, setInput] = useState("");
+    const [output, setOutput] = useState("");
+    const [code, setCode] = useState(`
+#include <iostream>
+using namespace std;
 
-    useEffect( () => {
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`);
 
+    useEffect(() => {
         const fetchProblem = async () => {
-
-            console.log( problemId ) ;
-
-            try{
+            try {
                 const req = await axios.get(`http://localhost:5000/problem/${problemId}`, { withCredentials: true });
-
-                console.log("hellow world  ")
-                console.log( req.data ) ;
-                const newProblem = req.data ;
-                setProblem( newProblem ) ;
-                console.log("hellow world  ")
+                setProblem(req.data);
+            } catch (error) {
+                console.log("Error while problem fetching in problem route ", error);
             }
-            catch(error){
-                console.log( "Error while problem fetching in problem route " , error ) ; 
-            }
+        }
+        fetchProblem();
+    }, [problemId]);
 
-        } 
+    const handleCodeChange = (newCode) => {
+        setCode(newCode);
+    };
 
-        fetchProblem() ;
+    const runCode = async () => {
+        console.log("Run this code");
+        console.log(code);
+        console.log(input);
+        
+        const sendData = { language: "cpp", code, input };
+        
+        try {
+            const req = await axios.post(`http://localhost:5000/run`, sendData, { withCredentials: true });
+            console.log("The compiled output:");
+            console.log(req.data);
+            setOutput(req.data);
+        } catch (error) {
+            console.error("Error while running code:", error);
+        }
+    }
 
-    } , [] );
+    return (
 
-
-    return(
-        <>
-
-            <div className={styles.problemPageContainer}>
-            <div className={styles.problemSection}>
-               
-                <div className={styles.problemDescription}>
-                <h2>{problemData.title}</h2>
-                {problemData.problemStatement}
+            <div className={styles.container}>
+                <div className={styles.problem}>
+                    <div className={styles.title}>{problemData.title}</div>
+                    <div>{problemData.problemStatement}</div>
                 </div>
-            </div>
-            <div className={styles.problemSection}>
                 <div className={styles.codeEditor}>
-                <h2>Code Editor</h2>
-                {/* Render code editor here */}
+                    <div>Code</div>
+                    <AceEditor
+                    mode="c_cpp"
+                    theme="monokai"
+                    name="cpp-editor"
+                    value={code}
+                    onChange={handleCodeChange}
+                    editorProps={{ $blockScrolling: true }}
+                    setOptions={{
+                        enableBasicAutocompletion: true,
+                        enableLiveAutocompletion: true,
+                        enableSnippets: true,
+                    }}
+                    style={{
+                        width: '100%',
+                        minHeight: '300px',
+                        borderRadius: '4px',
+                        border: '1px solid #ccc', // You can override border styles here if needed
+                        fontSize: '14px', // You can adjust font size here if needed
+                        /* Add any additional styles you need */
+                      }}
+                    />
+                    
+                    <div className={styles.inputOutput}>
+                        <div>
+                        <h3>Input</h3>
+                        <textarea
+                            className={styles.textarea}
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                        />
+                        </div>
+                        <div>
+                        <h3>Output</h3>
+                        <textarea
+                            className={styles.textarea}
+                            value={output}
+                            readOnly={true}
+                        />
+                        </div>
+                    </div>
+                    <div>
+                        <button onClick={runCode}>Run</button>
+                        <div className={styles.submit}>Submit</div>
+                    </div>
+
                 </div>
+                
             </div>
-            </div>
-        </>
-
     );
-
 }

@@ -5,7 +5,7 @@ import styles from './Admin.module.css'; // Import the CSS module
 
 export default function Admin() {
 
-    const [problemList, setProblemList] = useState([{ title: "abc" }]);
+    const [problemList, setProblemList] = useState([]);
 
     const fetchData = async () => {
         try {

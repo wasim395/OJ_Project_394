@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken') ;
 
 const cors = require('cors') ;
 const cookieParser = require('cookie-parser');
+const { generateInputFile } = require("./generateInputFile.js");
 
 
 
@@ -280,7 +281,11 @@ app.delete('/admin/delete/:id', async (req, res) => {
 
 
 app.post( "/run" , async (req , res) => {
-    const { language='cpp', code } = req.body ;
+    const { language='cpp', code , input } = req.body ;
+
+    console.log(language) ; 
+    console.log(code) ; 
+    console.log(input) ; 
 
     if( code === undefined ){
         return res.status(500).json( {
@@ -291,8 +296,9 @@ app.post( "/run" , async (req , res) => {
 
     try{
         const filePath = await generateFile( language , code ) ;
-        const output = await executeCpp(filePath) ;
-        res.json({filePath , output });
+        const fileInputPath = await generateInputFile(input) ;
+        const output = await executeCpp( filePath , fileInputPath ) ;
+        res.json(output);
     }
     catch(error){
         return res.status(500).send(error + " this is eroor box ") ;
