@@ -24,6 +24,10 @@ int main() {
     return 0;
 }`);
 
+    const [correct , setCorrect ] = useState("") ;
+    const [total , setTotal ] = useState("") ;
+    const [verdict , setVerdict ] = useState("") ;
+
     useEffect(() => {
         const fetchProblem = async () => {
             try {
@@ -57,12 +61,36 @@ int main() {
         }
     }
 
+    const submitCode = async () => {
+        console.log("code : " , code);
+        const tempData = { language: "cpp", code };
+    
+        try {
+            const req = await axios.post(`http://localhost:5000/submit/${problemId}`, tempData , { withCredentials: true });
+            console.log(req.data) ;
+            setCorrect(req.data.correct) ;
+            setTotal(req.data.total) ;
+            setVerdict(req.data.verdict) ;
+            
+        } catch (error) {
+            console.log("Error while submitting");
+            console.log(error, " this is error box while submitting");
+        }
+    }
+    
+
     return (
 
             <div className={styles.container}>
                 <div className={styles.problem}>
                     <div className={styles.title}>{problemData.title}</div>
-                    <div>{problemData.problemStatement}</div>
+                    <div className={styles.problemStatement}>{problemData.problemStatement}</div>
+                    <div className={styles.inputOutput1}>
+                        <span>Input</span>
+                        <div>{problemData.expectedInput}</div>
+                        <span>Output</span>
+                        <div>{problemData.expectedOutput}</div>
+                    </div>
                 </div>
                 <div className={styles.codeEditor}>
                     <div>Code</div>
@@ -106,9 +134,11 @@ int main() {
                         />
                         </div>
                     </div>
-                    <div>
-                        <button onClick={runCode}>Run</button>
-                        <div className={styles.submit}>Submit</div>
+                    <div className={styles.buttonDiv}>
+                        <button className={styles.button} onClick={runCode}>Run</button>
+                        <div className={styles.verdict}>Verdict: {verdict}</div>
+                        <div className={styles.result}>Result: {`${correct}/${total}`}</div>
+                        <div className={styles.submit} onClick={submitCode}>Submit</div>
                     </div>
 
                 </div>

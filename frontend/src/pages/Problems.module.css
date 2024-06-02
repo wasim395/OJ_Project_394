@@ -7,19 +7,49 @@
   }
   
   .problem {
-    background-color: #f4f4f4;
-    width: 70vw; /* Set width to 50% of viewport width */
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 20px;
-    border-radius: 8px;
-    margin-top : 10px;
-    margin-left : 20px;
-    margin-right : 10px;
-  }
+    margin-top : 10px ;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width : 70vw ;
+}
 
-  .title {
+.title {
     font-size: 24px;
+    font-weight: bold;
     margin-bottom: 10px;
-  }
+    color: #333;
+}
+
+.problemStatement {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.inputOutput1 {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.inputOutput1 div {
+    margin-top: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.inputOutput1 div:first-child {
+    margin-top: 0;
+}
+
+.inputOutput1 span {
+    font-weight: bold;
+}
+
   
   .codeEditor {
     background-color: #f4f4f4;
@@ -50,22 +80,62 @@
     padding: 10px;
     resize: none;
   }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .submit {
+
+
+/* CodeComponent.module.css */
+
+.buttonDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
+    gap: 10px;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
     text-align: center;
-  }
-  
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.verdict {
+    font-size: 18px;
+    color: #333;
+}
+
+.result {
+    font-size: 16px;
+    color: #555;
+}
+
+.submit {
+    background-color: #ff2f00;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.submit:hover {
+    background-color: #aa2323;
+}

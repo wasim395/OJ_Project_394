@@ -307,7 +307,7 @@ app.post( "/run" , async (req , res) => {
     // res.json( { language , code  }) ;
 });
 
-app.get( "/submit/:id" , async (req , res) => {
+app.post( "/submit/:id" , async (req , res) => {
 
     const problemId = req.params.id ;
     console.log(problemId) ;
