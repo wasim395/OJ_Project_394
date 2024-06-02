@@ -58,7 +58,7 @@ const authenticate = async (req, res, next) => {
 
 
 app.get("/" , async ( req , res ) => {
-    const array = await Problems.find().limit(5) ;
+    const array = await Problems.find() ;
     res.json(array) ;
 });
 
@@ -307,6 +307,71 @@ app.post( "/run" , async (req , res) => {
     // res.json( { language , code  }) ;
 });
 
+app.get( "/submit/:id" , async (req , res) => {
+
+    const problemId = req.params.id ;
+    console.log(problemId) ;
+    const { language='cpp', code } = req.body ;
+    const problem = await Problems.findOne({ _id : problemId }) ;
+    const testCase = problem["testCase"] ;
+
+    console.log( "testcase : " , testCase ) ;
+
+    console.log(language) ; 
+    console.log(code) ; 
+
+    if( code === undefined ){
+        return res.status(500).json( {
+            success : false ,
+            error : "Empty Code Box",
+        })
+    }
+
+    try{
+        const filePath = await generateFile( language , code ) ;
+
+        let correct = 0 ;
+        let total = testCase.length ;
+        let verdict = "ACCEPTED" ;
+
+        for( let i=0 ; i<total ; i++ ){
+            const fileInputPath = await generateInputFile( testCase[i]["input"] ) ;
+            const generatedOutput = await executeCpp( filePath , fileInputPath ) ;
+            const correctOutput = testCase[i]["output"]  ;
+            
+            //check for TLE
+
+
+            if( generatedOutput.trimEnd() === correctOutput.trimEnd() ){
+                correct++ ;
+            }
+            else{
+                verdict = "WRONG ANSWER"
+                break ;
+            }
+
+        }
+
+        res.json({
+            verdict ,
+            correct , 
+            total ,
+        }) ;
+
+    }
+    catch(error){
+        const errorString = error.toString();
+
+        // Extract the error message from the string
+        const errorIndex = errorString.indexOf('error:');
+
+        const errorMessage = errorString.substring(errorIndex).trim();
+
+        res.status(500).json( errorMessage );
+    }
+
+    // res.json( { language , code  }) ;
+});
 
 app.listen( process.env.PORT , () => {
     console.log( `The server is lisning from ${process.env.PORT}`) ;
