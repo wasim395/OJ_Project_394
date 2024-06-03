@@ -12,7 +12,7 @@ export default function Home() {
     const fetchProblems = async () => {
       try {
 
-        const req = await axios.get('http://localhost:5000' , { withCredentials : true } ) ;
+        const req = await axios.get('http://localhost:5000/home' , { withCredentials : true } ) ;
         console.log(" listing problems ")
         setProblem(req.data);
         

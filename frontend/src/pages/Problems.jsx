@@ -52,7 +52,7 @@ int main() {
         const sendData = { language: "cpp", code, input };
         
         try {
-            const req = await axios.post(`http://localhost:5000/run`, sendData, { withCredentials: true });
+            const req = await axios.post(`http://localhost:5000/compiler/run`, sendData, { withCredentials: true });
             console.log("The compiled output:");
             console.log(req.data);
             setOutput(req.data);
@@ -66,7 +66,7 @@ int main() {
         const tempData = { language: "cpp", code };
     
         try {
-            const req = await axios.post(`http://localhost:5000/submit/${problemId}`, tempData , { withCredentials: true });
+            const req = await axios.post(`http://localhost:5000/compiler/submit/${problemId}`, tempData , { withCredentials: true });
             console.log(req.data) ;
             setCorrect(req.data.correct) ;
             setTotal(req.data.total) ;
@@ -93,7 +93,7 @@ int main() {
                     </div>
                 </div>
                 <div className={styles.codeEditor}>
-                    <div>Code</div>
+                    <div>Code</div> 
                     <AceEditor
                     mode="c_cpp"
                     theme="monokai"

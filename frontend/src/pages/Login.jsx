@@ -13,7 +13,7 @@ export default function Login() {
     const loginUser = async (e) => {
         e.preventDefault() ;
         try{
-            const res = await axios.post('http://localhost:5000/login' , userData , { withCredentials: true } ) ; 
+            const res = await axios.post('http://localhost:5000/user/login' , userData , { withCredentials: true } ) ; 
             console.log(res.data) ;
         }
         catch(error) {

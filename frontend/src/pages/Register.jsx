@@ -15,7 +15,7 @@ export default function Register() {
         event.preventDefault() ;
 
         try{
-          const res = await axios.post('http://localhost:5000/register' , userData ) ;
+          const res = await axios.post('http://localhost:5000/user/register' , userData ) ;
           console.log( "Response" , res.data ) ;
         }
         catch(error){

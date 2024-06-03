@@ -22,5 +22,5 @@ const generateInputFile = async ( input ) => {
 }; 
 
 module.exports = {
-    generateInputFile,
+    generateInputFile ,
 };
