@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useState } from 'react';
 import styles from './create.module.css' ;
+import { useNavigate  } from 'react-router-dom';
 
 export default function Create( ){
 
@@ -12,6 +13,7 @@ export default function Create( ){
     const [testCases, setTestCases] = useState([]);
     const [input , setInput] = useState("") ;   
     const [output , setOutput] = useState("") ;
+    const navigate = useNavigate() ;
 
 
     function add_TestCase(){
@@ -39,11 +41,15 @@ export default function Create( ){
         }
         else{
             try{
-                console.log(testCases) 
+
+                // console.log(testCases) 
                 const dataToSend = { title , problemStatement , explainInput ,explainOutput , testCases } ;
-                console.log("sending request") ;
+                // console.log("sending request") ;
                 const res = await axios.post( 'http://localhost:5000/admin/create' , dataToSend , {withCredentials:true}  ) ;
-                console.log("success" , res.data) ;
+                // console.log("success" , res.data) ;
+                alert('Problem created successfully');
+                navigate("/admin") ;
+
             }
             catch(error){
                 console.log(" error while sending data " , error ) ;

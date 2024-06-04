@@ -21,67 +21,66 @@ const run = async (req , res) => {
         res.json(output);
     }
     catch(error){
-        return res.status(500).send(error + " this is eroor box ") ;
+        
+        const errorMessage = error.message ;
+        const errorIndex = errorMessage.indexOf("error:");
+        const finalError = errorMessage.substring(errorIndex);
+        res.status(500) .send(finalError);
     }
 };
 
-const submit = async (req , res) => {
+const submit = async (req, res) => {
+    try {
+        const problemId = req.params.id;
+        const { language = 'cpp', code } = req.body;
 
-    const problemId = req.params.id ;
-    const { language='cpp', code } = req.body ;
-    const problem = await Problems.findOne({ _id : problemId }) ;
-    const testCase = problem["testCase"] ;
+        // Validate inputs
+        if (!code) {
+            return res.status(400).json({
+                success: false,
+                error: "Empty Code Box",
+            });
+        }
 
-    if( code === undefined ){
-        return res.status(500).json( {
-            success : false ,
-            error : "Empty Code Box",
-        })
-    }
+        const problem = await Problems.findOne({ _id: problemId });
+        if (!problem) {
+            return res.status(404).json({
+                success: false,
+                error: "Problem not found",
+            });
+        }
 
-    try{
-        const filePath = await generateFile( language , code ) ;
+        const testCase = problem.testCase || [];
 
-        let correct = 0 ;
-        let total = testCase.length ;
-        let verdict = "ACCEPTED" ;
+        const filePath = await generateFile(language, code);
 
-        for( let i=0 ; i<total ; i++ ){
-            const fileInputPath = await generateInputFile( testCase[i]["input"] ) ;
-            const generatedOutput = await executeCpp( filePath , fileInputPath ) ;
-            const correctOutput = testCase[i]["output"]  ;
-            
-            //check for TLE
+        let correct = 0;
+        let total = testCase.length;
+        let verdict = "ACCEPTED";
 
+        for (const test of testCase) {
+            const fileInputPath = await generateInputFile(test.input);
+            const generatedOutput = await executeCpp(filePath, fileInputPath);
+            const correctOutput = test.output;
 
-            if( generatedOutput.trimEnd() === correctOutput.trimEnd() ){
-                correct++ ;
+            if (generatedOutput.trim() !== correctOutput.trim()) {
+                verdict = "WRONG ANSWER";
+                break;
             }
-            else{
-                verdict = "WRONG ANSWER"
-                break ;
-            }
-
+            correct++;
         }
 
         res.json({
-            verdict ,
-            correct , 
-            total ,
-        }) ;
-
+            verdict,
+            correct,
+            total,
+        });
+    } catch (error) {
+        const errorMessage = error.message ;
+        const errorIndex = errorMessage.indexOf("error:");
+        const finalError = errorMessage.substring(errorIndex);
+        res.status(500).send(finalError) ;
     }
-    catch(error){
-        const errorString = error.toString();
-
-        // Extract the error message from the string
-        const errorIndex = errorString.indexOf('error:');
-
-        const errorMessage = errorString.substring(errorIndex).trim();
-
-        res.status(500).json( errorMessage );
-    }
-
 };
 
 module.exports = {

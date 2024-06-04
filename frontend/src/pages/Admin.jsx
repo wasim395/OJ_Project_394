@@ -21,8 +21,14 @@ export default function Admin() {
     }, [])
 
     const deleteProblem = async (problemId) => {
-        await axios.delete(`http://localhost:5000/admin/delete/${problemId}`, { withCredentials: true });
-        fetchData();
+
+        const confirmation = window.confirm(" Are you sure you want to permanently delete a problem ? ")
+
+        if( confirmation ){
+            await axios.delete(`http://localhost:5000/admin/delete/${problemId}`, { withCredentials: true });
+            fetchData();
+        }
+
     }
 
     return (
@@ -35,9 +41,13 @@ export default function Admin() {
                     <li key={index} className={styles.problemItem}>
                         <div className={styles.problemTitle}>{problem.title}</div>
                         <div className={styles.problemActions}>
-                            <button onClick={() => deleteProblem(problem._id)} className={styles.deleteButton}>Delete</button>
-                            <Link to={`/problem/${problem._id}`} className={styles.actionLink}>Read</Link>
-                            <Link to={`/admin/edit/${problem._id}`} className={`${styles.actionLink} ${styles.editButton}`}>Edit</Link>
+
+                        <div onClick={() => deleteProblem(problem._id)} className={`${styles.actionButton} ${styles.deleteButton}`}>Delete</div>
+
+                        <Link to={`/problem/${problem._id}`} className={`${styles.actionButton} ${styles.readButton}`}>Read</Link>
+
+                        <Link to={`/admin/edit/${problem._id}`} className={`${styles.actionButton} ${styles.editButton}`}>Edit</Link>
+
                         </div>
                     </li>
                 ))}

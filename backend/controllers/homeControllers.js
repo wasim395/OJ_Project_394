@@ -13,7 +13,7 @@ const problem = async ( req , res ) => {
         res.json(currProblem) ; 
     }
     catch(error){
-        console.log(error) ;
+        res.status(404).send(error) ;
     }
 };
 

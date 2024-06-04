@@ -7,10 +7,16 @@ import 'ace-builds/src-noconflict/mode-c_cpp';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/snippets/c_cpp';
+import { useNavigate } from 'react-router-dom';
+
+import CompilerBox from './CompilerBox';
+
+
 
 export default function Problem() {
     const params = useParams();
     const problemId = params.id;
+    const navigate = useNavigate();
 
     const [problemData, setProblem] = useState({});
     const [input, setInput] = useState("");
@@ -27,6 +33,7 @@ int main() {
     const [correct , setCorrect ] = useState("") ;
     const [total , setTotal ] = useState("") ;
     const [verdict , setVerdict ] = useState("") ;
+
 
     useEffect(() => {
         const fetchProblem = async () => {
@@ -45,19 +52,14 @@ int main() {
     };
 
     const runCode = async () => {
-        console.log("Run this code");
-        console.log(code);
-        console.log(input);
-        
+
         const sendData = { language: "cpp", code, input };
         
         try {
             const req = await axios.post(`http://localhost:5000/compiler/run`, sendData, { withCredentials: true });
-            console.log("The compiled output:");
-            console.log(req.data);
             setOutput(req.data);
         } catch (error) {
-            console.error("Error while running code:", error);
+            console.log(error); 
         }
     }
 
@@ -67,12 +69,18 @@ int main() {
     
         try {
             const req = await axios.post(`http://localhost:5000/compiler/submit/${problemId}`, tempData , { withCredentials: true });
+            console.log(req.data)  ;
             console.log(req.data) ;
             setCorrect(req.data.correct) ;
             setTotal(req.data.total) ;
             setVerdict(req.data.verdict) ;
             
         } catch (error) {
+
+            if( error.response.status == "401" ){
+                console.log("user is not login") ;
+                navigate('/LoginRegister');
+            }
             console.log("Error while submitting");
             console.log(error, " this is error box while submitting");
         }
@@ -116,7 +124,7 @@ int main() {
                       }}
                     />
                     
-                    <div className={styles.inputOutput}>
+                    {/* <div className={styles.inputOutput}>
                         <div>
                         <h3>Input</h3>
                         <textarea
@@ -139,10 +147,14 @@ int main() {
                         <div className={styles.verdict}>Verdict: {verdict}</div>
                         <div className={styles.result}>Result: {`${correct}/${total}`}</div>
                         <div className={styles.submit} onClick={submitCode}>Submit</div>
-                    </div>
+                    </div> */}
+
+                    <CompilerBox problemId={problemId}  code={code}/> 
 
                 </div>
+
                 
+
             </div>
     );
 }

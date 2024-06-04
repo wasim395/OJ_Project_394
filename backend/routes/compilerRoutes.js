@@ -4,8 +4,7 @@ const authenticate = require("../middlewares/authenticate") ;
 const compilerControllers = require("../controllers/compilerControllers") ; 
 
 
-// router.use(authenticate) ;
-
+router.use(authenticate) ;
 
 router.post(`/run` , compilerControllers.run ) ;
 router.post(`/submit/:id` , compilerControllers.submit ) ;

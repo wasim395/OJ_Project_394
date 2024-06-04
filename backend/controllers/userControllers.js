@@ -5,22 +5,9 @@ const User = require("../modols/User") ;
 
 const register = async ( req , res ) => {
     try{
-        //getting the data required for registration
-        //front the User by frontend 
+
         const {firstName , lastName , email , password } =  req.body ;
 
-
-        //checking all the provided 
-        //hence every required data is filld by the user
-
-        // if( firstName == "" || lastNmae == "" || password == "" ){
-        //     return res.status(400).send("please fill all the required data") ;
-        // }
-
-
-        //checking all the data provided is in valid form 
-
-        //checking if the userdId ( email ) already exist 
         const isUserExist = await User.findOne({email}) ;
         if( isUserExist ){
             return res.status(400).send("User already exist with the given Email") ;
@@ -57,13 +44,6 @@ const login = async ( req , res )=>{
         //getting data from the frontEnd to login 
         const {email , password } =  req.body ;
 
-        //checking validation 
-        //first checking all the data should be provided 
-        // if( !( email && password )){
-        //     return res.status(400).send("Please fill all the required Data") ;
-        // }
-
-        //checking , is there any user the the given Email or not 
         const user = await User.findOne({email}) ;
         if( !user ){
             return res.status(400).send("User not found with the give Email") ;
@@ -82,20 +62,11 @@ const login = async ( req , res )=>{
         user.token = token  ;
         user.password = undefined ;
 
-        //cookies
-        const option = {
+        res.cookie('token', token, { 
             expires : new Date( Date.now() + 1*24*60*60*1000 ) ,
-            httpOnly: true ,
-        }
-
-        //sending cookies
-        // res.status(200).cookie("OJ_token" , token , option ).json({
-        //     message : "You have successfully Login" , 
-        //     success : true ,
-        //     token ,
-        // });
-
-        res.cookie('token', token, { httpOnly: true, secure : false , sameSite: 'Lax' }); 
+            httpOnly: true, 
+            secure : false , 
+            sameSite: 'Lax' }); 
         return res.json({ message: 'Login successful' });
     }
     catch( error ){
@@ -106,8 +77,6 @@ const login = async ( req , res )=>{
 const logout = ( req , res ) => {
     // Clear the cookie
     res.clearCookie('token');
-
-    console.log("inside backend logout ") ;
     // Respond with a success message
     res.json({ message: 'Logout successful' });
 };

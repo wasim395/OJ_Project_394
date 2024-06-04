@@ -20,7 +20,7 @@ const executeCpp = async ( filePath , fileInputPath ) => {
 
     return new Promise( (resolve ,reject ) => {
 
-        exec( `g++ ${filePath} -o ${outputFileNamePath} && cd ${outputPath} && .\\${outputFileName} < ${fileInputPath}` , ( error , stdout , stderr ) => {
+        exec( `g++ ${filePath} -o ${outputFileNamePath} && cd ${outputPath} && timeout 4s ./${outputFileName} < ${fileInputPath}` , ( error , stdout , stderr ) => {
 
             if( error ){
                 reject(error) ;
