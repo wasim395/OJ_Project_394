@@ -8,14 +8,16 @@ const cookieParser = require('cookie-parser');
 //calling database 
 DBConnection() ;
 
-// Define CORS options
-const corsOptions = {
-    origin: 'http://localhost:5173', // Replace with the origin of your React frontend
-    credentials: true // Allow credentials (cookies)
-};
+// Configure CORS middleware
+app.use(cors({  
+    origin: function (origin, callback) {
+      // Allow requests from any origin
+      callback(null, true);
+    },
+    credentials: true // Enable credentials (cookies, authorization headers, TLS client certificates)
+  }));
 app.use(express.json()) ;
 app.use(express.urlencoded({extended : true})) ;
-app.use(cors(corsOptions));
 app.use(cookieParser());
 
 

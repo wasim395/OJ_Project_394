@@ -1,14 +1,19 @@
 const checkAdmin = async (req, res, next) => {
     try {
-        // console.log(req.user.role);
+        console.log("Checking admin role");
+        console.log("User role:", req.user.role);
+
         if (req.user.role === "admin") {
+            console.log("User is an admin. Proceeding to next middleware.");
             next();
         } else {
-            res.status(403).send("Forbidden: You do not have the necessary permissions.");
+            console.log("User is not an admin. Sending Forbidden status.");
+            res.send(496 , "Forbidden: You do not have the necessary permissions.") ;
         }
     } catch (error) {
-        res.status(500).send("Internal Server Error: Something went wrong while checking admin.");
+        console.log("Error checking admin:", error);
+        res.send(500 , "Internal Server Error: Something went wrong while checking admin.");
     }
 };
 
-module.exports = checkAdmin ;
+module.exports = checkAdmin;

@@ -1,13 +1,12 @@
 const express = require("express") ;
 const router = express.Router();
-const authenticate = require("../middlewares/authenticate") ;
 const compilerControllers = require("../controllers/compilerControllers") ; 
 
 
-router.use(authenticate) ;
+const authenticate = require("../middlewares/authenticate") ;
 
 router.post(`/run` , compilerControllers.run ) ;
-router.post(`/submit/:id` , compilerControllers.submit ) ;
+router.post(`/submit/:id` , authenticate , compilerControllers.submit ) ;
 
 
 module.exports = router ;

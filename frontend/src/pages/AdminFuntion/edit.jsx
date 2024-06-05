@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import styles from './create.module.css';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
+
 export default function Edit() {
   const { id: problemId } = useParams();
 
@@ -21,7 +23,7 @@ export default function Edit() {
     const fetchProblem = async () => {
       setLoading(true);
       try {
-        const req = await axios.get(`http://localhost:5000/problem/${problemId}`, { withCredentials: true });
+        const req = await axios.get( `${SERVER_URL}/problem/${problemId}` , { withCredentials: true });
         const data = req.data;
         console.log(data) ;
         setTitle(data.title);
@@ -62,7 +64,7 @@ export default function Edit() {
 
     try {
       const dataToSend = { title, problemStatement, explainInput, explainOutput, testCases };
-      const res = await axios.put(`http://localhost:5000/admin/edit/${problemId}`, dataToSend, { withCredentials: true });
+      const res = await axios.put(`${SERVER_URL}/admin/edit/${problemId}`, dataToSend, { withCredentials: true });
 
       if (res.status === 200) {
         alert('Problem updated successfully');

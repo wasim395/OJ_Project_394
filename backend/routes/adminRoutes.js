@@ -9,11 +9,10 @@ const adminControllers = require("../controllers/adminControllers") ;
 router.use(authenticate) ;
 router.use(checkAdmin) ;
 
-
 router.get( '/' , adminControllers.admin ) ;
 router.post(`/create` , adminControllers.create ) ;
 router.put(`/edit/:id` , adminControllers.edit ) ;
-router.delete('/delete/:id' , adminControllers.deleteProblem ) ;
+router.delete('/delete/:id' ,adminControllers.deleteProblem ) ;
 
 
 module.exports = router ;

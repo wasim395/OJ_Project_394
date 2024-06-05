@@ -4,6 +4,8 @@ import { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './CompilerBox.module.css' ;
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
+
 const CompilerBox = (props) => {
 
     const problemId = props.problemId ;
@@ -33,7 +35,7 @@ const CompilerBox = (props) => {
         console.log( code ) ;
         
         try {
-            const req = await axios.post(`http://localhost:5000/compiler/run`, sendData, { withCredentials: true });
+            const req = await axios.post(`${SERVER_URL}/compiler/run`, sendData, { withCredentials: true });
             setOutput(req.data);
             handleOutputBox() ;
         } catch (error) {
@@ -46,7 +48,7 @@ const CompilerBox = (props) => {
         const tempData = { language: "cpp", code };
     
         try {
-            const req = await axios.post(`http://localhost:5000/compiler/submit/${problemId}`, tempData , { withCredentials: true });
+            const req = await axios.post(`${SERVER_URL}/compiler/submit/${problemId}`, tempData , { withCredentials: true });
             console.log(req.data)  ;
             console.log(req.data.correct) ;
             console.log(req.data.total) ;

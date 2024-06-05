@@ -3,6 +3,7 @@ import axios from 'axios';
 import style from './LoginRegister.module.css';
 import { useNavigate } from 'react-router-dom';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 export default function LoginRegister() {
 
@@ -55,7 +56,7 @@ export default function LoginRegister() {
 
         if( isOtp ){
 
-            const urlRegister = 'http://localhost:5000/user/register' ;
+            const urlRegister = `${SERVER_URL}/user/register` ;
 
             try{
                 await axios.post( urlRegister , userData , {withCredentials: true} ) ;
@@ -68,7 +69,7 @@ export default function LoginRegister() {
         } 
         else if( isSignUp ){
 
-            const urlGetOtp = 'http://localhost:5000/user/generate-otp' ;
+            const urlGetOtp = `${SERVER_URL}/user/generate-otp` ;
 
             try{
                 await axios.post( urlGetOtp , userData , {withCredentials : true} ) ;
@@ -82,7 +83,7 @@ export default function LoginRegister() {
         }
         else{
             try{
-                const url = 'http://localhost:5000/user/login' ;
+                const url = `${SERVER_URL}/user/login` ;
                 const res = await axios.post( url, userData, { withCredentials: true }) ;
                 navigate("/") ;
             }

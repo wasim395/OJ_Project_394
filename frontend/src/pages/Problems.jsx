@@ -10,6 +10,7 @@ import 'ace-builds/src-noconflict/snippets/c_cpp';
 import { useNavigate } from 'react-router-dom';
 
 import CompilerBox from './CompilerBox';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 
 
@@ -38,7 +39,7 @@ int main() {
     useEffect(() => {
         const fetchProblem = async () => {
             try {
-                const req = await axios.get(`http://localhost:5000/problem/${problemId}`, { withCredentials: true });
+                const req = await axios.get( `${SERVER_URL}/problem/${problemId}`, { withCredentials: true });
                 setProblem(req.data);
             } catch (error) {
                 console.log("Error while problem fetching in problem route ", error);
@@ -56,7 +57,7 @@ int main() {
         const sendData = { language: "cpp", code, input };
         
         try {
-            const req = await axios.post(`http://localhost:5000/compiler/run`, sendData, { withCredentials: true });
+            const req = await axios.post(`${SERVER_URL}/compiler/run`, sendData, { withCredentials: true });
             setOutput(req.data);
         } catch (error) {
             console.log(error); 
@@ -68,7 +69,7 @@ int main() {
         const tempData = { language: "cpp", code };
     
         try {
-            const req = await axios.post(`http://localhost:5000/compiler/submit/${problemId}`, tempData , { withCredentials: true });
+            const req = await axios.post(`${SERVER_URL}/compiler/submit/${problemId}`, tempData , { withCredentials: true });
             console.log(req.data)  ;
             console.log(req.data) ;
             setCorrect(req.data.correct) ;

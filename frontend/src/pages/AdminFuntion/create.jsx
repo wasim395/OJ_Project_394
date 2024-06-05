@@ -4,6 +4,8 @@ import { useState } from 'react';
 import styles from './create.module.css' ;
 import { useNavigate  } from 'react-router-dom';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL
+
 export default function Create( ){
 
     const [title, setTitle] = useState('');
@@ -45,13 +47,16 @@ export default function Create( ){
                 // console.log(testCases) 
                 const dataToSend = { title , problemStatement , explainInput ,explainOutput , testCases } ;
                 // console.log("sending request") ;
-                const res = await axios.post( 'http://localhost:5000/admin/create' , dataToSend , {withCredentials:true}  ) ;
+                const res = await axios.post( `${SERVER_URL}/admin/create` , dataToSend , {withCredentials:true}  ) ;
                 // console.log("success" , res.data) ;
                 alert('Problem created successfully');
                 navigate("/admin") ;
 
             }
             catch(error){
+                if( error.response.status === 496 ){
+                    alert(" you are not Admin ") ;
+                }
                 console.log(" error while sending data " , error ) ;
             }
         }

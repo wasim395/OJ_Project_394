@@ -1,7 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import style from './Navbar.module.css';
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -10,33 +13,37 @@ export default function Navbar() {
 
   const funSetLogin = async () => {
     try {
-      await axios.get('http://localhost:5000/user/isLogin', { withCredentials: true });
-      setLogin(true);
+        console.log( " checking the isLogin ") ;
+        const req = await axios.get(`${SERVER_URL}/user/isLogin`, { withCredentials: true });
+        console.log( req.status ) ;
+        if (req.status === 200) {
+        console.log( " staus is 200 and the person is login  ") ;
+        setLogin(true);
+        } else {
+        console.log( " person is not login  ") ;
+        setLogin(false);
+        }
     } catch (error) {
+      console.log('Error checking login status:', error);
       setLogin(false);
     }
   };
 
   useEffect(() => {
+    console.log("Location changed:", location);
     funSetLogin();
   }, [location]); // Runs when the location changes
 
   const handleLogout = async () => {
-
-    const confirmation = window.confirm( " Are you sure you want to Logout " ) ;
-
-    if( confirmation ){
-        try {
-            // Send a POST request to the logout endpoint
-            await axios.get('http://localhost:5000/user/logout', { withCredentials: true });
-      
-            // Redirect to the login page or any other page
-            navigate('/LoginRegister'); // Redirect to the login page
-          } catch (error) {
-            console.error('Logout failed:', error);
-          }
+    const confirmation = window.confirm("Are you sure you want to Logout?");
+    if (confirmation) {
+      try {
+        await axios.get(`${SERVER_URL}/user/logout`, { withCredentials: true });
+        navigate('/LoginRegister');
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
     }
-
   };
 
   return (
