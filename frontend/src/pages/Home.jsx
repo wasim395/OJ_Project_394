@@ -11,6 +11,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
+        
         const req = await axios.get( `${SERVER_URL}/home`, { withCredentials: true });
         console.log("Listing problems:", req.data);
 

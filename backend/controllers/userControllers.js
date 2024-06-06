@@ -64,15 +64,15 @@ const login = async (req, res) => {
             expiresIn: '1h',
         });
 
-        user.token = token;
+        user.token = token ;
         user.password = undefined;
 
         console.log("Setting token in cookie");
         res.cookie('token', token, {
             expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
             httpOnly: true,
-            secure: false,
-            sameSite: 'Lax'
+            secure: true,
+            sameSite: 'None' ,
         });
         console.log("Login successful");
         return res.json({ message: 'Login successful' });
