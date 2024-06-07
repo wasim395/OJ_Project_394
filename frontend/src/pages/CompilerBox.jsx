@@ -8,6 +8,7 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 const CompilerBox = (props) => {
 
+    const navigate = useNavigate();
     const problemId = props.problemId ;
     const code = props.code ;
     
@@ -39,7 +40,9 @@ const CompilerBox = (props) => {
             setOutput(req.data);
             handleOutputBox() ;
         } catch (error) {
-            console.log(error); 
+            console.log( error.response.data ); 
+            setOutput(error.response.data );
+            handleOutputBox() ;
         }
     }
 
@@ -63,10 +66,17 @@ const CompilerBox = (props) => {
 
             if( error.response.status == "401" ){
                 console.log("user is not login") ;
+                alert("you have to Login to Submit the code") ;
                 navigate('/LoginRegister');
             }
-            console.log("Error while submitting");
-            console.log(error, " this is error box while submitting");
+            else if( error.response.status == "500" ){
+                console.log( error.response.data ); 
+                setOutput(error.response.data );
+                handleOutputBox() ;
+            }
+            else{
+                console.log(error) ;
+            }
         }
     }
 

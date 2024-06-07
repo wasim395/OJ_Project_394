@@ -10,7 +10,7 @@ const authenticate = async (req, res, next) => {
 
     if (!token) {
         console.log("Token not found");
-        return res.status(409).send("Token not found");
+        return res.status(401).send("Token not found");
     }
 
     try {

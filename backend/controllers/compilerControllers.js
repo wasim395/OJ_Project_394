@@ -7,6 +7,7 @@ const run = async (req, res) => {
     const { language = 'cpp', code, input } = req.body;
 
     console.log("Received run request with language:", language);
+    console.log(code) ;
 
     if (code === undefined) {
         console.log("Empty code box detected");
@@ -19,23 +20,25 @@ const run = async (req, res) => {
     try {
         console.log("Generating file for language:", language);
         const filePath = await generateFile(language, code);
-
+    
         console.log("Generating input file");
         const fileInputPath = await generateInputFile(input);
-
+    
         console.log("Executing code:", filePath);
         const output = await executeCpp(filePath, fileInputPath);
-
+    
         console.log("Run completed successfully");
+        
+        console.log(output);
+    
+        // Send both stdout and stderr in the response
         res.json(output);
     } catch (error) {
-        console.error("Error occurred during run:", error);
-        const errorMessage = error.message;
-        const errorIndex = errorMessage.indexOf("error:");
-        const finalError = errorMessage.substring(errorIndex);
-        res.status(500).send(finalError);
+        console.log("Runtime error:", error);
+        res.status(500).json(error);
     }
 };
+
 
 const submit = async (req, res) => {
     try {
@@ -95,11 +98,8 @@ const submit = async (req, res) => {
             total,
         });
     } catch (error) {
-        console.error("Error occurred during submit:", error);
-        const errorMessage = error.message;
-        const errorIndex = errorMessage.indexOf("error:");
-        const finalError = errorMessage.substring(errorIndex);
-        res.status(500).send(finalError);
+        console.log("error while submitting the code" , error ) ;
+        res.status(500).send(error);
     }
 };
 
