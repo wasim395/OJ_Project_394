@@ -90,6 +90,12 @@ export default function LoginRegister() {
             catch(error){
                 console.log( " error while login : " , error ) ;
                 setShowOtp(false) ;
+                if( error.response.status === 400 ){
+                    alert("User not found , please Register ") ;
+                }
+                else if( error.response.status === 401 ){
+                    alert("Wrong Passwrod") ;
+                }
             }
         }
     };

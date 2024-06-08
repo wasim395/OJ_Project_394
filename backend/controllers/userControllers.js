@@ -56,7 +56,7 @@ const login = async (req, res) => {
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
             console.log("Wrong Password");
-            return res.status(400).send("Wrong Password");
+            return res.status(401).send("Wrong Password");
         }
 
         console.log("Generating token");
