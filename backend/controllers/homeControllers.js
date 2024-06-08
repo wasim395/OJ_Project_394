@@ -1,4 +1,6 @@
 const Problems = require('../models/Problems');
+const User = require("../models/User");
+
 
 const home = async (req, res) => {
     console.log("Home route called");
@@ -25,7 +27,21 @@ const problem = async (req, res) => {
     }
 };
 
+const submissionHistory = async (req , res) => {
+
+    const problemId = req.params.id; // Assuming the problemId is passed in the URL parameters
+
+    // Handle the result...
+    const allSubmission = req.user.submissionHistory ;
+    const currProblemSubmission = allSubmission.filter( submission => submission.problemId === problemId );
+    const reversedFirstTen = currProblemSubmission.reverse().slice(0, 10);
+    res.json(reversedFirstTen);
+
+
+}
+
 module.exports = {
     home,
     problem,
+    submissionHistory,
 };

@@ -10,6 +10,7 @@ import 'ace-builds/src-noconflict/snippets/c_cpp';
 import { useNavigate } from 'react-router-dom';
 
 import CompilerBox from './CompilerBox';
+import CodePopup from '../component/CodePopup';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL
 
 
@@ -20,8 +21,6 @@ export default function Problem() {
     const navigate = useNavigate();
 
     const [problemData, setProblem] = useState({});
-    const [input, setInput] = useState("");
-    const [output, setOutput] = useState("");
     const [code, setCode] = useState(`
 #include <iostream>
 using namespace std;
@@ -31,9 +30,10 @@ int main() {
     return 0;
 }`);
 
-    const [correct , setCorrect ] = useState("") ;
-    const [total , setTotal ] = useState("") ;
-    const [verdict , setVerdict ] = useState("") ;
+    const [showProblem , setShowProblem ] = useState(true) ;
+    const [showSubmission, setShowSubmission ] = useState(false) ;
+    const [sumbmissionList , setSubmissionList ] = useState([]) ;
+
 
 
     useEffect(() => {
@@ -52,55 +52,118 @@ int main() {
         setCode(newCode);
     };
 
-    const runCode = async () => {
 
-        const sendData = { language: "cpp", code, input };
+
+    useEffect( () => {
         
-        try {
-            const req = await axios.post(`${SERVER_URL}/compiler/run`, sendData, { withCredentials: true });
-            setOutput(req.data);
-        } catch (error) {
-            console.log(error); 
-        }
-    }
-
-    const submitCode = async () => {
-        console.log("code : " , code);
-        const tempData = { language: "cpp", code };
-    
-        try {
-            const req = await axios.post(`${SERVER_URL}/compiler/submit/${problemId}`, tempData , { withCredentials: true });
-            console.log(req.data)  ;
-            console.log(req.data) ;
-            setCorrect(req.data.correct) ;
-            setTotal(req.data.total) ;
-            setVerdict(req.data.verdict) ;
-            
-        } catch (error) {
-
-            if( error.response.status == "401" ){
-                console.log("user is not login") ;
-                navigate('/LoginRegister');
+        const fetchProblem = async () => {
+            try {
+                const req = await axios.get( `${SERVER_URL}/submissionHistory/${problemId}`, { withCredentials: true });
+                setSubmissionList(req.data);
+            } catch (error) {
+                console.log("Error while problem fetching in problem route ", error);
             }
-            console.log("Error while submitting");
-            console.log(error, " this is error box while submitting");
         }
+        fetchProblem();
+
+    } , [showSubmission]);
+
+    const sumbmissionClicked = () => {
+        setShowProblem(false) ;
+        setShowSubmission(true) ;
     }
-    
+    const problemClicked = () => {
+        setShowProblem(true) ;
+        setShowSubmission(false) ;
+    }
+
+    const getTime = ( subTime ) => {
+        const currTime = Math.floor(Date.now() / 1000) ;
+        const diff = currTime - subTime ;
+
+        if( diff < 60 ){
+            return `${diff} sec` ;
+        }
+        const min = Math.floor(diff / 60) ;
+        if( min < 60 ){
+            return `${min} min` ;
+        }
+        const hour = Math.floor(min / 60) ;
+        if( hour < 24 ){
+            return `${hour} hour` ;
+        }
+
+        const day = Math.floor(min / 24) ;
+        return `${day} day` ;
+    }
 
     return (
 
             <div className={styles.container}>
-                <div className={styles.problem}>
-                    <div className={styles.title}>{problemData.title}</div>
-                    <div className={styles.problemStatement}>{problemData.problemStatement}</div>
-                    <div className={styles.inputOutput1}>
-                        <span>Input</span>
-                        <div>{problemData.expectedInput}</div>
-                        <span>Output</span>
-                        <div>{problemData.expectedOutput}</div>
+                
+                <div>
+                    {/* <div>
+                        <div onClick={problemClicked} > Problem </div>
+                        <div onClick={sumbmissionClicked} > My Submission </div>
+                    </div> */}
+                    <div className={styles.tabContainer}>
+                        <div 
+                            onClick={problemClicked} 
+                            className={`${styles.tab} ${showProblem ? styles.activeTab : styles.nonActiveTab}`}
+                        >
+                            Problem
+                        </div>
+                        <div 
+                            onClick={sumbmissionClicked} 
+                            className={`${styles.tab} ${showSubmission ? styles.activeTab : styles.nonActiveTab}`}
+                        >
+                            My Submission
+                        </div>
                     </div>
+
+                    {(showProblem && 
+                        <div className={styles.problem}>
+                            <div className={styles.title}>{problemData.title}</div>
+                            <div className={styles.problemStatement}>{problemData.problemStatement}</div>
+                            <div className={styles.inputOutput1}>
+                                <span>Input</span>
+                                <div>{problemData.expectedInput}</div>
+                                <span>Output</span>
+                                <div>{problemData.expectedOutput}</div>
+                            </div>
+                        </div>
+                    )}
+
+                    {(showSubmission && 
+                        <div className={`${styles.problem} ${styles.submissionListContainer}`}>
+                            <table className={styles.submissionTable}>
+                                <thead>
+                                <tr>
+                                    <th>Verdict</th>
+                                    <th>Score</th>
+                                    <th>Submission Time</th>
+                                    <th>Code</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {sumbmissionList.map((submission, index) => (
+                                    <tr key={index} className={submission.verdict.trim().toUpperCase() === "ACCEPTED" ? styles.acceptedRow : styles.rejectedRow}>
+                                    <td>{submission.verdict}</td>
+                                    <td>{submission.score}</td>
+                                    <td>{getTime(submission.submissionTime)}</td>
+                                    <td><CodePopup code={code} /></td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    )}
+
                 </div>
+
+
+
                 <div className={styles.codeEditor}>
                     <div>Code</div> 
                     <AceEditor
@@ -124,31 +187,6 @@ int main() {
                         /* Add any additional styles you need */
                       }}
                     />
-                    
-                    {/* <div className={styles.inputOutput}>
-                        <div>
-                        <h3>Input</h3>
-                        <textarea
-                            className={styles.textarea}
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                        />
-                        </div>
-                        <div>
-                        <h3>Output</h3>
-                        <textarea
-                            className={styles.textarea}
-                            value={output}
-                            readOnly={true}
-                        />
-                        </div>
-                    </div>
-                    <div className={styles.buttonDiv}>
-                        <button className={styles.button} onClick={runCode}>Run</button>
-                        <div className={styles.verdict}>Verdict: {verdict}</div>
-                        <div className={styles.result}>Result: {`${correct}/${total}`}</div>
-                        <div className={styles.submit} onClick={submitCode}>Submit</div>
-                    </div> */}
 
                     <CompilerBox problemId={problemId}  code={code}/> 
 

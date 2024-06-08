@@ -60,7 +60,7 @@ export default function LoginRegister() {
 
             try{
                 await axios.post( urlRegister , userData , {withCredentials: true} ) ;
-                navigate("/") ;
+                navigate('/LoginRegister');
             }
             catch(error){
                 console.log("error whiel registering : " , error ) ;

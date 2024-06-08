@@ -1,5 +1,4 @@
 const Problems = require('../models/Problems');
-const User = require("../models/User");
 
 const admin = async (req, res) => {
     try {

@@ -27,7 +27,17 @@ const userSchema = new mangoose.Schema({
         type : String ,
         default : "user" ,
         require : true ,
-    }
+    },
+
+    submissionHistory : [
+        {
+            problemId : {type : String } ,
+            verdict : { type : String } ,
+            score : { type : String } ,
+            submissionTime : { type : String } ,
+            code : { type : String } ,
+        }
+    ],
 
 }); 
 

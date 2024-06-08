@@ -59,7 +59,8 @@ export default function Navbar() {
         </div>
       ) : (
         <div className={style.navbarNav}>
-          <Link className={style.navItem} to='/LoginRegister'>Login</Link>
+            <Link className={style.navItem} to='/'>Home</Link>
+            <Link className={style.navItem} to='/LoginRegister'>Login</Link>
         </div>
       )}
     </div>

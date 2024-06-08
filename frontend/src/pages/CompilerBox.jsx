@@ -41,7 +41,12 @@ const CompilerBox = (props) => {
             handleOutputBox() ;
         } catch (error) {
             console.log( error.response.data ); 
-            setOutput(error.response.data );
+            if( error.response.data === "TLE" ){
+                setOutput( "Time Limit Exceeded");
+            }
+            else{
+                setOutput(error.response.data );
+            }
             handleOutputBox() ;
         }
     }
@@ -51,6 +56,7 @@ const CompilerBox = (props) => {
         const tempData = { language: "cpp", code };
     
         try {
+
             const req = await axios.post(`${SERVER_URL}/compiler/submit/${problemId}`, tempData , { withCredentials: true });
             console.log(req.data)  ;
             console.log(req.data.correct) ;
@@ -137,7 +143,9 @@ const CompilerBox = (props) => {
                         readOnly={true}
                     >
                         { verdict === "ACCEPTED" ? <div className={styles.accepted}>ACCEPTED</div> :  "" }
-                        { verdict === "WRONG ANSWER" ? <div className={styles.wa }>ACCEPTED</div> :  "" }
+                        { verdict === "WRONG ANSWER" ? <div className={styles.wa }>WRONG ANSWER</div> :  "" }
+                        { verdict === "TLE" ? <div className={styles.wa }>Time Limit Exceeded</div> :  "" }
+                        { verdict === "Error" ? <div className={styles.wa }>Error</div> :  "" }
                         { verdict !== "" ? <div className={styles.result }>score : {correct}/{total}</div> :  "" }
                         
                     </div>
