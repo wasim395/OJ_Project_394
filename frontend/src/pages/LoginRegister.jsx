@@ -45,9 +45,18 @@ export default function LoginRegister() {
         setUserData({ ...userData, [name]: value });
     };
     const toggleForm = () => {
-        setIsSignUp((p) => p = !p );
-        setSignIn((p) => p = !p);
-        setShowOtp(false);
+
+        if( isOtp == false ){
+            setIsSignUp((p) => p = !p );
+            setSignIn((p) => p = !p);
+            setShowOtp(false);
+        }
+        else{
+            setIsSignUp((p) => p = true );
+            setSignIn((p) => p = false );
+            setShowOtp(false);
+        }
+
     };
 
     const handleSubmit = async (e) => {
@@ -60,6 +69,8 @@ export default function LoginRegister() {
 
             try{
                 await axios.post( urlRegister , userData , {withCredentials: true} ) ;
+                alert("Congratulations on successfully registering") ;
+                handleIsSignIn() ;
                 navigate('/LoginRegister');
             }
             catch(error){
