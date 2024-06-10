@@ -61,7 +61,7 @@ const login = async (req, res) => {
 
         console.log("Generating token");
         const token = jwt.sign({ id: user._id, email }, process.env.SecretKey, {
-            expiresIn: '1h',
+            expiresIn: '24h',
         });
 
         user.token = token ;
@@ -69,13 +69,13 @@ const login = async (req, res) => {
 
         console.log("Setting token in cookie");
         res.cookie('token', token, {
-            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None' ,
+            expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Expires in 24 hours
+            httpOnly: true, // Cookie accessible only via HTTP(S) requests, not JavaScript
+            secure: true, // Cookie transmitted over both secure (HTTPS) and non-secure (HTTP) connections
+            sameSite: 'None', // Allows cross-origin requests when sent securely
         });
         console.log("Login successful");
-        return res.json({ message: 'Login successful' });
+        return res.status(200).json({ message: 'Login successful' });
     } catch (error) {
         console.error("Error in login:", error);
         res.status(500).send("Something went wrong");
@@ -83,12 +83,27 @@ const login = async (req, res) => {
 };
 
 const logout = (req, res) => {
-    // Clear the cookie
-    console.log("Logout route called");
-    res.clearCookie('token');
-    // Respond with a success message
-    res.json({ message: 'Logout successful' });
+    try {
+        // Log a message indicating the logout route has been accessed
+        console.log("Logout route called");
+
+        // Clear the authentication token cookie from the response with the same attributes
+        res.clearCookie('token',  {
+            httpOnly: true, // Cookie accessible only via HTTP(S) requests, not JavaScript
+            secure: true, // Cookie transmitted over both secure (HTTPS) and non-secure (HTTP) connections
+            sameSite: 'None', // Allows cross-origin requests when sent securely
+        });
+
+
+        // Send a JSON response to the client confirming successful logout
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        // If an error occurs during logout process, send a 500 status code
+        res.status(500).json({ message: 'An error occurred during logout' });
+        console.error('Error during logout:', error);
+    }
 };
+
 
 module.exports = {
     register,

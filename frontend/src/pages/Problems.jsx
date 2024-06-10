@@ -151,7 +151,7 @@ int main() {
                                     <td>{submission.verdict}</td>
                                     <td>{submission.score}</td>
                                     <td>{getTime(submission.submissionTime)}</td>
-                                    <td><CodePopup code={code} /></td>
+                                    <td><CodePopup code={submission.code} /></td>
                                     </tr>
                                 ))}
                                 </tbody>
