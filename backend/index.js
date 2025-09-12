@@ -25,12 +25,14 @@ const homeRoutes = require("./routes/homeRoutes") ;
 const userRoutes = require("./routes/userRoutes") ;
 const adminRoutes = require("./routes/adminRoutes") ;
 const compilerRoutes = require("./routes/compilerRoutes") ;
+const generateRoutes = require("./routes/generatorRoutes.js") ;
 
 
 app.use( "/" , homeRoutes ) ;
 app.use( "/user"  , userRoutes ) ;
 app.use( "/admin" , adminRoutes ) ;
 app.use( "/compiler" , compilerRoutes ) ;
+app.use( "/api" , generateRoutes ) ;
 
 
 app.listen( process.env.PORT , () => {
