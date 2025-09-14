@@ -54,9 +54,9 @@ const ProblemSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["draft", "published"],
-            default: "draft"  // published only after hidden cases exist
-        },
+            enum: ["draft", "validated", "published"], // <-- three statuses
+            default: "draft",
+        }
     },
     { timestamps: true }
 );

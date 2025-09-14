@@ -2,10 +2,10 @@ const { generateHiddenTestCases } = require("../../services/generator/generateHi
 
 async function addHiddenTestCasesController(req, res) {
     try {
-        console.log("addHiddenTestCasesController called");
         const { problemId } = req.params;
-        console.log("Received problemId:", problemId);
-        const problem = await generateHiddenTestCases(problemId);
+        const { n } = req.body; // number of hidden test cases to generate
+
+        const problem = await generateHiddenTestCases(problemId, n);
         res.status(200).json({ success: true, data: problem });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -13,3 +13,4 @@ async function addHiddenTestCasesController(req, res) {
 }
 
 module.exports = { addHiddenTestCasesController };
+
