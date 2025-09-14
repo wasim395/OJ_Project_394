@@ -1,138 +1,247 @@
-/* General Styles for the Component */
+/* CompilerBox.module.css */
 .compilerBox {
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    margin: auto;
-    padding: 20px;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Toolbar Styles */
-.compilerBox .toolbar {
+.toolbar {
     display: flex;
-    justify-content: flex-start; /* Align toolbar items to the right */
-    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
 }
 
-.compilerBox .button {
-    background-color: #eceff1;
-    border: none;
-    border-radius: 4px;
-    color: #555;
-    padding: 10px 20px;
+.button {
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    margin-left: 10px; /* Add some spacing between buttons */
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid transparent;
+    border-bottom: none;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-right: 2px;
+    border-radius: 3px 3px 0 0;
 }
 
-.compilerBox .button:hover {
-    background-color: #d0d4d8;
+.button:hover {
+    background-color: #e9e9e9;
 }
 
-.compilerBox .activeButton {
-    background-color: #607d8b;
-    color: #fff;
+.activeButton {
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+    border-color: #ddd;
+    border-bottom: 1px solid #fff;
+    position: relative;
+    top: 1px;
+    z-index: 1;
 }
 
-/* Text Area Styles */
-.compilerBox .textAreaContainer {
-    margin-bottom: 20px;
+/* Text Area Container */
+.textAreaContainer {
+    background: white;
+    border-top: 1px solid #ddd;
 }
 
-.compilerBox .textArea {
+.textArea {
     width: 100%;
-    height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
+    height: 110px;
+    /* Further reduced height for more editor space */
+    border: none;
+    outline: none;
+    padding: 12px;
     box-sizing: border-box;
-    font-family: monospace;
-    resize: vertical;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    resize: none;
+    background: white;
+    color: #333;
+    line-height: 1.4;
 }
-.mdt{
+
+.textArea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.textArea[readonly] {
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+/* Verdict Display Area */
+.mdt {
     background-color: #ffffff;
     width: 100%;
-    height: 210px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
+    height: 110px;
+    /* <<<< MODIFIED: Reduced height and reverted styles */
+    padding: 12px;
     box-sizing: border-box;
-    font-family: monospace;
-    resize: vertical;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    overflow-y: auto;
+    /* Removed flex properties to revert to previous style */
 }
 
-/* Button Container Styles */
-.compilerBox .buttonContainer {
+/* Loading State for Judging */
+.judging {
     display: flex;
-    justify-content: center; /* Center the buttons */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+    font-size: 16px;
 }
 
-.submitButton{
-    background-color: #e83e35;
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4285f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Button Container */
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+}
+
+.runButton,
+.submitButton {
+    padding: 8px 20px;
     border: none;
-    border-radius: 4px;
-    color: #fff;
-    padding: 10px 20px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0 10px; /* Add some spacing between buttons */
-}
-.runButton{
-    background-color: #4655de;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    padding: 10px 20px; 
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0 10px; /* Add some spacing between buttons */
-}
-.runButton:hover {
-    background-color: #2633a4 ;
-}
-.submitButton:hover {
-    background-color:  #ac3427;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 80px;
+    justify-content: center;
 }
 
+.runButton {
+    background-color: #4CAF50;
+    color: white;
+}
 
-.accepted{
-    background-color: green;
+.runButton:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.submitButton {
+    background-color: #008CBA;
+    color: white;
+}
+
+.submitButton:hover:not(:disabled) {
+    background-color: #007B9E;
+}
+
+.runButton:disabled,
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.loading {
+    pointer-events: none;
+}
+
+.buttonSpinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* <<<< MODIFIED: Reverted to previous, more compact verdict styles */
+.accepted,
+.wa {
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 16px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: bold;
     margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-.wa{
-    background-color: #ff2f00;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+
+.accepted {
+    background-color: #28a745;
 }
-.result{
-    border: none;
-    padding: 10px 20px;
+
+.wa {
+    background-color: #dc3545;
+}
+
+.result {
+    color: #333;
+    padding: 8px 16px;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
     margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .buttonContainer {
+        justify-content: stretch;
+    }
+
+    .runButton,
+    .submitButton {
+        flex: 1;
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .button {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .textArea,
+    .mdt {
+        height: 120px;
+    }
 }

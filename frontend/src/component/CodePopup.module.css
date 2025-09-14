@@ -1,0 +1,164 @@
+.viewCodeButton {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.viewCodeButton:hover {
+    background-color: #3367d6;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    max-width: 80vw;
+    max-height: 80vh;
+    min-width: 600px;
+    min-height: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    outline: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+}
+
+.modalTitle {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.modalActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.copyButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 90px;
+}
+
+.copyButton:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+.copyButton:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+    border-radius: 3px;
+    transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+    color: #333;
+    background-color: #e9ecef;
+}
+
+.codeContainer {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.codeBlock {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    white-space: pre;
+}
+
+.codeBlock code {
+    color: inherit;
+    background: none;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .modal {
+        min-width: 90vw;
+        max-width: 95vw;
+        min-height: 60vh;
+        max-height: 90vh;
+    }
+
+    .modalHeader {
+        padding: 15px;
+    }
+
+    .modalTitle {
+        font-size: 16px;
+    }
+
+    .copyButton {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: 80px;
+    }
+
+    .codeContainer {
+        padding: 15px;
+    }
+
+    .codeBlock {
+        padding: 15px;
+        font-size: 13px;
+    }
+}

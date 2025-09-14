@@ -1,36 +1,35 @@
-
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #9DDE8B;
     padding: 1rem;
-    font-family:Verdana, Geneva, Tahoma, sans-serif ;
-  }
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
-  .navbarBrand a {
+.navbarBrand a {
     color: white;
     text-decoration: none;
     font-size: 1.5rem;
-    font-weight: bold ;
-    
-  }
+    font-weight: bold;
 
-  .navbarNav {
+}
+
+.navbarNav {
     list-style: none;
     display: flex;
     margin: 0;
     padding: 0;
-  }
+}
 
-  .navItem {
-    margin-left : 1rem ;
+.navItem {
+    margin-left: 1rem;
     color: #006769;
     text-decoration: none;
     padding: 0.5rem 1rem;
     transition: background-color 0.3s;
-  }
+}
 
-  .navItem:hover {
+.navItem:hover {
     background-color: hsl(0, 0%, 94%);
-  }
+}
