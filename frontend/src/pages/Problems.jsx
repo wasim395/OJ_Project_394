@@ -1,4 +1,3 @@
-// Problems.jsx
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -271,7 +270,7 @@ int main() {
                                 wrap: false,
                                 fontSize,
                                 scrollPastEnd: 0.1,
-                                showPrintMargin: false, // <<<< ADDED: This removes the vertical line
+                                showPrintMargin: false, // Removes the vertical line in the editor
                             }}
                             style={{ width: "100%", height: "100%" }}
                         />

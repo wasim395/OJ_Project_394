@@ -1,35 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #9DDE8B;
-    padding: 1rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    flex-wrap: nowrap;
+    /* Prevents items from wrapping to a second line */
+    white-space: nowrap;
+    /* Ensures text inside links doesn't wrap */
+}
+
+.navbarLeft,
+.navbarRight {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbarBrand a,
+.navItem {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .navbarBrand a {
-    color: white;
+    color: #006769;
     text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-
-}
-
-.navbarNav {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .navItem {
-    margin-left: 1rem;
+    position: relative;
     color: #006769;
+    font-weight: 500;
+    font-size: 0.9rem;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease-in-out;
+    background-color: transparent;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.navButton {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 16px;
+    background-color: #e0f2f1;
+    color: #004d40;
+    font-weight: 600;
+    line-height: 1;
 }
 
 .navItem:hover {
-    background-color: hsl(0, 0%, 94%);
+    color: #004d40;
+}
+
+.navButton:hover {
+    background-color: #c8e6c9;
+    color: #00332d;
+    transform: translateY(-1px);
+}
+
+.active {
+    color: #004d40;
+    font-weight: 600;
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0.3rem;
+    left: 0.25rem;
+    right: 0.25rem;
+    height: 2px;
+    background-color: #004d40;
+    border-radius: 2px;
+}
+
+.navButton.active::after {
+    display: none;
+}
+
+@media (max-width: 650px) {
+    .navbar {
+        padding: 0 1rem;
+    }
+
+    .navbarLeft,
+    .navbarRight {
+        gap: 0.5rem;
+    }
+
+    .navbarBrand a {
+        font-size: 1.1rem;
+    }
+
+    .navItem {
+        font-size: 0.85rem;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+
+    .navButton {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
 }
