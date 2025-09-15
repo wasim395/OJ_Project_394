@@ -1,100 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --primary-font: 'Poppins', sans-serif;
+    --bg-color: #f8f9fa;
+    --container-bg: #ffffff;
+    --border-color: #dee2e6;
+    --header-text: #343a40;
+    --body-text: #495057;
+    --green: #28a745;
+    --green-hover: #218838;
+    --red: #dc3545;
+    --yellow: #ffc107;
+    --gray: #6c757d;
+    --blue: #007bff;
+    --published-bg: #d1ecf1;
+    --published-text: #0c5460;
+}
+
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    margin-left : 10vw ; 
-    margin-right : 10vw ;
+    padding: 2rem 4rem;
+    font-family: var(--primary-font);
+    background-color: var(--bg-color);
+    min-height: 100vh;
 }
 
-.createLinkContainer {
-    display: flex;
-    justify-content: center; /* Horizontally center */
-    margin: 20px;
-}
-
-.createLink {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-.createLink:hover {
-    background-color: #45a049;
-}
-
-.problemList {
-    list-style-type: none;
-    padding: 0;
-}
-
-.problemItem {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
 }
 
-.problemItem:hover {
-    background-color: #f1f1f1;
+.header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--header-text);
+    margin: 0;
 }
 
-.problemTitle {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.problemActions {
+.headerActions {
     display: flex;
-    gap: 10px;
-}
-/* For Delete Button */
-.deleteButton {
-    background-color: rgb(246, 54, 54);
+    align-items: center;
+    gap: 1.5rem;
 }
 
-/* For Read Button */
-.readButton {
-    background-color: rgb(52, 52, 221);
-}
-
-/* For Edit Button */
-.editButton {
-    background-color: rgb(222, 164, 48);
-}
-
-/* Shared Styles for Action Buttons */
-.actionButton {
-    display: inline-block;
-    padding: 6px 12px; /* Reduced padding */
-    border: none;
-    border-radius: 4px;
+.createButton {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--green);
     color: white;
     text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.createButton:hover {
+    background-color: var(--green-hover);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tableContainer {
+    background-color: var(--container-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th,
+td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+thead {
+    background-color: var(--bg-color);
+}
+
+th {
+    font-weight: 600;
+    color: var(--body-text);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.titleCell {
+    font-weight: 500;
+    color: #212529;
+}
+
+.pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.easy {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.medium {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.hard {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.published {
+    background-color: var(--published-bg);
+    color: var(--published-text);
+}
+
+.draft {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.validated {
+    background-color: var(--published-bg);
+    color: var(--published-text);
+}
+
+.actionsCell {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.actionButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 1rem;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    text-decoration: none;
     cursor: pointer;
-    margin-right: 10px;
-    width: 90px; /* Reduced width */
-    text-align: center;
-    transition: background-color 0.3s ease;
-    font-size: 14px; /* Reduced font size */
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
 }
 
-/* Hover Effect */
 .actionButton:hover {
-    transform: scale(1.1);
-    
+    opacity: 0.85;
 }
 
-/* Focus Effect */
-.actionButton:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
+.continueButton {
+    background-color: var(--blue);
+}
+
+.publishButton {
+    background-color: var(--green);
+}
+
+.viewButton {
+    background-color: var(--published-bg);
+    color: var(--published-text);
+}
+
+.editButton {
+    background-color: var(--yellow);
+    color: #212529;
+}
+
+.deleteButton {
+    background-color: var(--red);
+}
+
+.centeredMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 1.2rem;
+}
+
+.errorMessage {
+    color: var(--red);
+    font-weight: 500;
+}
+
+.filterGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.filterButton {
+    padding: 0.5rem 1.25rem;
+    font-family: var(--primary-font);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background-color: var(--container-bg);
+    color: var(--body-text);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.filterButton:hover {
+    background-color: #f1f3f5;
+    border-color: #ced4da;
+}
+
+.activeFilter {
+    background-color: var(--header-text);
+    color: white;
+    border-color: var(--header-text);
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    animation: fadeInScaleUp 0.3s ease-out;
+}
+
+@keyframes fadeInScaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modalContent h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--header-text);
+}
+
+.modalContent p {
+    margin: 1rem 0;
+    color: var(--body-text);
+}
+
+.modalActions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modalButton {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.cancelButton {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.cancelButton:hover {
+    background-color: #d1d3d5;
+}
+
+.confirmButton {
+    background-color: var(--red);
+    color: white;
+}
+
+.confirmButton:hover {
+    background-color: #c82333;
+}
+
+.noResults {
+    text-align: center;
+    padding: 3rem;
+    color: var(--body-text);
+    font-style: italic;
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .headerActions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 768px) {
+    .headerActions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .createButton {
+        width: 100%;
+        justify-content: center;
+    }
 }

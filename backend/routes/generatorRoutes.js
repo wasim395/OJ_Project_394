@@ -7,10 +7,10 @@ const { publishProblemController } = require("../controllers/generator/publishPr
 
 const router = express.Router();
 
-router.post("/automate/problems/create", authMiddleware, createProblemController);
-router.post("/automate/problems/:problemId/hidden", authMiddleware, addHiddenTestCasesController);
-router.post("/automate/problems/:problemId/validate", authMiddleware, validateAndPrepareController);
-router.post("/automate/problems/:problemId/publish", authMiddleware, publishProblemController);
+router.post("/problems/create", authMiddleware, createProblemController);
+router.post("/problems/:problemId/hidden", authMiddleware, addHiddenTestCasesController);
+router.post("/problems/:problemId/validate", authMiddleware, validateAndPrepareController);
+router.post("/problems/:problemId/publish", authMiddleware, publishProblemController);
 
 module.exports = router;
 
