@@ -4,8 +4,7 @@ import Navbar from './component/Navbar'
 import Home from './pages/Home'
 import Problem from './pages/Problems'
 import Admin from './pages/Admin'
-import Create from './pages/AdminFuntion/create'
-import Edit from './pages/AdminFuntion/edit'
+import ProblemEditor from './pages/ProblemCreation/ProblemCreationPage'
 
 import LoginRegister from "./pages/LoginRegister";
 
@@ -18,13 +17,11 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/problem/:id' element={<Problem />} />
                 <Route path='/admin' element={<Admin />} />
-                <Route path='/admin/create' element={<Create />} />
-                <Route path='/admin/edit/:id' element={<Edit />} />
+                <Route path="/admin/edit/:problemId" element={<ProblemEditor />} />
                 <Route path='/LoginRegister' element={<LoginRegister />} />
             </Routes>
         </>
     )
-
 }
 
 export default App

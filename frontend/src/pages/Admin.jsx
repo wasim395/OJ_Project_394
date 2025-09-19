@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Admin.module.css';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
@@ -15,6 +15,8 @@ export default function Admin() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [problemToDelete, setProblemToDelete] = useState(null);
     const [selectedStatuses, setSelectedStatuses] = useState(new Set(['all']));
+
+    const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         setIsLoading(true);
@@ -43,6 +45,18 @@ export default function Admin() {
             setFilteredList(filtered);
         }
     }, [problemList, selectedStatuses]);
+
+    const handleCreateProblem = async () => {
+        try {
+            const res = await axios.post(`${SERVER_URL}/admin/problems/draft`, {}, { withCredentials: true });
+            // On success, navigate to the edit page for the new draft
+            console.log("New draft created with ID:", res.data._id);
+            navigate(`/admin/edit/${res.data._id}`);
+        } catch (err) {
+            setError("Failed to create a new problem draft.");
+        }
+    };
+
 
     const handleStatusChange = (status) => {
         const newStatuses = new Set(selectedStatuses);
@@ -96,6 +110,7 @@ export default function Admin() {
             closeModal();
         }
     };
+
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -215,9 +230,12 @@ export default function Admin() {
                             </button>
                         ))}
                     </div>
-                    <Link to="/admin/create" className={styles.createButton}>
+                    {/* <Link to="/admin/create" className={styles.createButton}>
                         + Create New Problem
-                    </Link>
+                    </Link> */}
+                    <button onClick={handleCreateProblem} className={styles.createButton}>
+                        + Create New Problem
+                    </button>
                 </div>
             </header>
 

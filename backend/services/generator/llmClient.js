@@ -1,7 +1,7 @@
 const { ChatGoogleGenerativeAI } = require("@langchain/google-genai");
 
 const llm = new ChatGoogleGenerativeAI({
-    apiKey: process.env.GEMINI_API_KEY, // put this in .env
+    apiKey: process.env.GEMINI_API_KEY, 
     // model: "gemini-2.5-flash",
     model: "gemini-2.5-pro",
     temperature: 0,
@@ -18,7 +18,7 @@ async function callLLM(prompt, retries = 3) {
 
         if (retries > 0) {
             console.log(`Retrying... attempts left: ${retries}`);
-            await new Promise(resolve => setTimeout(resolve, 2000)); // wait 2s
+            await new Promise(resolve => setTimeout(resolve, 2000)); 
             return callLLM(prompt, retries - 1);
         }
 

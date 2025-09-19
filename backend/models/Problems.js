@@ -3,26 +3,22 @@ const mongoose = require("mongoose");
 const TestCaseSchema = new mongoose.Schema({
     input: { type: String, required: true },
     output: { type: String, required: true }
-}, { _id: false });
+});
 
 const ProblemSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-            required: true,
             trim: true,
         },
         problemStatement: {
             type: String,
-            required: true,
         },
         expectedInput: {
             type: String,
-            required: true,
         },
         expectedOutput: {
             type: String,
-            required: true,
         },
         constraints: {
             type: [String],
@@ -35,12 +31,10 @@ const ProblemSchema = new mongoose.Schema(
         hiddenTestCases: {
             type: [TestCaseSchema],
             default: [],
-            // validate: [array => array.length > 0, "At least one test case is required"]
         },
         difficulty: {
             type: String,
             enum: ["easy", "medium", "hard"],
-            required: true,
             index: true,
         },
         tags: {
@@ -54,7 +48,7 @@ const ProblemSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["draft", "validated", "published"], // <-- three statuses
+            enum: ["draft", "validated", "published"],
             default: "draft",
         }
     },

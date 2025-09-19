@@ -1,19 +1,17 @@
-
-const express = require("express") ;
+const express = require("express");
 const router = express.Router();
-const authenticate = require("../middlewares/authenticate") ;
-const checkAdmin = require("../middlewares/checkAdmin") ;
-const adminControllers = require("../controllers/adminControllers") ;
+const authenticate = require("../middlewares/authenticate");
+const checkAdmin = require("../middlewares/checkAdmin");
+const adminControllers = require("../controllers/adminControllers");
 
+router.use(authenticate);
+router.use(checkAdmin);
 
-router.use(authenticate) ;
-router.use(checkAdmin) ;
+router.get('/', adminControllers.listProblems);
+router.post('/problems/draft', adminControllers.createDraft);
+router.get('/problems/:problemId', adminControllers.getProblemById);
+router.put('/problems/:problemId', adminControllers.updateProblem);
+router.delete('/delete/:problemId', adminControllers.deleteProblem);
+router.post('/problems/:problemId/delete-test-cases', adminControllers.deleteTestCasesBatch);
 
-router.get( '/' , adminControllers.admin ) ;
-router.post(`/create` , adminControllers.create ) ;
-router.put(`/edit/:id` , adminControllers.edit ) ;
-router.delete('/delete/:id' ,adminControllers.deleteProblem ) ;
-
-
-module.exports = router ;
-
+module.exports = router;

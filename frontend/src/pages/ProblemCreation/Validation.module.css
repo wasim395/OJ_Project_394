@@ -1,0 +1,123 @@
+/* Add these styles to your existing ProblemCreationPage.module.css */
+
+.validationContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.statusPanel {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid;
+    font-size: 1rem;
+}
+
+.statusPanel p {
+    margin: 0 0 0 15px;
+    font-weight: 500;
+}
+
+.statusPanel svg {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Status Colors */
+.statusPanel.idle,
+.statusPanel.processing {
+    background-color: #eef2ff;
+    border-color: #818cf8;
+    color: #4338ca;
+}
+
+.statusPanel.success {
+    background-color: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.statusPanel.failed {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+    color: #991b1b;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.actionBox,
+.warningsBox {
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+.warningsBox {
+    border-left: 4px solid #facc15;
+    /* Yellow accent for warnings */
+}
+
+.actionBox h4,
+.warningsBox h4 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.warningsBox ul {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.warningsBox li {
+    margin-bottom: 10px;
+}
+
+.deleteButton {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}
+
+.actionsFooter {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.primaryButton {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.primaryButton:hover {
+    background-color: #4338ca;
+}

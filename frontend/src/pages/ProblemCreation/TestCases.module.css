@@ -1,0 +1,251 @@
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.mainContent .card:last-child {
+    margin-bottom: 0;
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.card p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.aiGenerateForm {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.aiGenerateForm input {
+    width: 80px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.btnAi {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #e8f4fd;
+    color: #1e88e5;
+}
+
+.btnAi:hover {
+    background-color: #d1e9fc;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup:last-child {
+    margin-bottom: 0;
+}
+
+.formGroup label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.formGroup textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-family: 'Consolas', monospace;
+    resize: vertical;
+}
+
+.addBtn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 1px dashed #ccc;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #555;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.addBtn:hover {
+    background-color: #e0e0e0;
+}
+
+.testCaseList {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.emptyState {
+    text-align: center;
+    color: #888;
+    padding: 20px 0;
+}
+
+.testCaseItem {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+
+.testCaseHeader {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+.testCaseHeader div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.tagAi {
+    background: #e3f2fd;
+    color: #1e88e5;
+}
+
+.tagManual {
+    background: #f3e5f5;
+    color: #8e24aa;
+}
+
+.removeBtn {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.removeBtn:hover {
+    color: #d32f2f;
+}
+
+.testCaseBody {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.testCaseBody pre {
+    font-family: 'Consolas', monospace;
+    background: #f5f5f5;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 4px 0 0 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+.progressItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.count {
+    font-weight: 600;
+    background: #eee;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.subItem {
+    font-size: 14px;
+    color: #555;
+    padding-left: 16px;
+}
+
+.formActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #000;
+}
+
+.btnSecondary {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.btnSecondary:hover {
+    background-color: #f5f5f5;
+}
+
+.btn {
+    background-color: #222;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: #000;
+}
