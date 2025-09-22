@@ -1,0 +1,76 @@
+.panel {
+    max-width: 300px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.heading {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+.subheading {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.pillsRow,
+.pillsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pillsGrid {
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.pillsGrid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pill {
+    padding: 6px 12px;
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #e1e5e9;
+    border-radius: 50px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.pillActive {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.clearContainer {
+    text-align: center;
+}
+
+.clearLink {
+    color: #007bff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.clearLink:hover {
+    color: #0056b3;
+}
