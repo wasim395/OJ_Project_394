@@ -28,7 +28,7 @@ export default function Navbar() {
             try {
                 await axios.get(`${SERVER_URL}/user/logout`, { withCredentials: true });
                 setLogin(false);
-                navigate('/LoginRegister');
+                navigate('/auth');
             } catch (error) {
                 console.error('Logout failed:', error);
             }
@@ -56,7 +56,7 @@ export default function Navbar() {
                         Logout
                     </button>
                 ) : (
-                    <Link className={`${style.navItem} ${pathname === '/LoginRegister' ? style.active : ''}`} to='/LoginRegister'>Login</Link>
+                    <Link className={`${style.navItem} ${pathname === '/auth' ? style.active : ''}`} to='/auth'>Login</Link>
                 )}
             </div>
         </nav>

@@ -1,33 +1,22 @@
 const jwt = require('jsonwebtoken');
-const User = require("../models/User");
+const User = require('../models/User');
 
 const authenticate = async (req, res, next) => {
-    
-    console.log("Start authentication");
-
+    console.log("Authenticate middleware called");
     const token = req.cookies.token;
-    console.log("Token:", token);
-
     if (!token) {
-        console.log("Token not found");
-        return res.status(401).send("Token not found");
+        return res.status(401).json({ message: 'Not authorized, no token provided' });
     }
-
     try {
-        const decoded = jwt.verify(token, process.env.SecretKey);
-        console.log("Decoded token:", decoded);
-
-        req.user = await User.findById(decoded.id);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = await User.findById(decoded.id).select('-password');
         if (!req.user) {
-            console.log("User not found");
-            return res.status(401).send("User not found");
+             return res.status(401).json({ message: 'Not authorized, user not found' });
         }
-
         next();
     } catch (error) {
-        console.log("Token verification error:", error);
-        return res.status(401).json({ message: 'Invalid token' });
+        return res.status(401).json({ message: 'Not authorized, token is invalid' });
     }
-}
+};
 
-module.exports = authenticate;
+module.exports = authenticate ;

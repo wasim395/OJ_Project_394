@@ -6,7 +6,9 @@ import Problem from './pages/Problems'
 import Admin from './pages/Admin'
 import ProblemEditor from './pages/ProblemCreation/ProblemCreationPage'
 
-import LoginRegister from "./pages/LoginRegister";
+import AuthPage from './pages/Auth/AuthPage';
+import ForgotPasswordPage from './pages/Auth/ForgotPassword';
+import ResetPasswordPage from './pages/Auth/ResetPassword';
 
 function App() {
 
@@ -18,7 +20,10 @@ function App() {
                 <Route path='/problem/:id' element={<Problem />} />
                 <Route path='/admin' element={<Admin />} />
                 <Route path="/admin/edit/:problemId" element={<ProblemEditor />} />
-                <Route path='/LoginRegister' element={<LoginRegister />} />
+
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
             </Routes>
         </>
     )

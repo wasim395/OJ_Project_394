@@ -1,21 +1,22 @@
-
-const express = require("express") ;
+const express = require('express');
 const router = express.Router();
-const userControllers = require("../controllers/userControllers") ;
-const generateOtpController = require("../controllers/generateOtpController") ;
-const jwt = require('jsonwebtoken') ; 
+const {
+    generateRegistrationOtp, 
+    verifyOtpAndRegister, 
+    loginUser, 
+    logoutUser,
+    getLoginStatus, 
+    forgotPassword, 
+    resetPassword,
+} = require('../controllers/userControllers');
+const authenticate = require('../middlewares/authenticate');
 
-
-const verifyingOTP  = require("../middlewares/verifyingOTP") ;
-const generatingOTP = require("../middlewares/generatingOTP") ;
-const validData = require("../middlewares/validData") ;
-const authenticate = require("../middlewares/authenticate");
-
-router.get( "/isLogin"  , authenticate , ( req , res ) => { res.status(200).send(200) } ) ;
-router.post( "/generate-otp" , validData , generatingOTP , generateOtpController.isGenerated ) ;
-router.post( `/register` , validData ,  verifyingOTP , userControllers.register  ) ;
-router.post( `/login`  , userControllers.login ) ;
-router.get( `/logout` , userControllers.logout ) ;
-
+router.post('/generate-otp', generateRegistrationOtp);
+router.post('/register', verifyOtpAndRegister);
+router.post('/login', loginUser);
+router.post('/forgot-password', forgotPassword);
+router.put('/reset-password/:token', resetPassword);
+router.get('/logout', authenticate, logoutUser);
+router.get('/isLogin', authenticate, getLoginStatus);
 
 module.exports = router;

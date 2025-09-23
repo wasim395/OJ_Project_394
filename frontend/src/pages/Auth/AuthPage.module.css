@@ -1,7 +1,11 @@
 .container {
     text-align: center;
     max-width: 300px;
-    margin: 0 auto;
+    margin: 50px auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form {
@@ -10,23 +14,23 @@
     align-items: center;
 }
 
-input {
+.form input {
     width: 100%;
     padding: 10px;
     margin: 5px;
-    border: 1px solid #ccc; /* Add border */
-    border-radius: 5px; /* Add border radius */
-    box-sizing: border-box; /* Ensure padding is included in width */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
-button {
+.form button {
     padding: 10px 20px;
     margin-top: 10px;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px; /* Add border radius */
+    border-radius: 5px;
 }
 
 .toggleButton {
@@ -34,4 +38,8 @@ button {
     border: none;
     color: #007bff;
     cursor: pointer;
+}
+
+.link {
+  margin-top: 1rem;
 }
