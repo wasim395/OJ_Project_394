@@ -10,6 +10,9 @@ import AuthPage from './pages/Auth/AuthPage';
 import ForgotPasswordPage from './pages/Auth/ForgotPassword';
 import ResetPasswordPage from './pages/Auth/ResetPassword';
 
+import SuperAdminDashboard from './pages/SuperAdminDashboard/SuperAdminDashboard';
+
+
 function App() {
 
     return (
@@ -24,6 +27,8 @@ function App() {
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
+                <Route path="/super-admin" element={<SuperAdminDashboard />} />
             </Routes>
         </>
     )

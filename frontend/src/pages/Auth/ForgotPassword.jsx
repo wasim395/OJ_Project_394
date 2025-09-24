@@ -28,7 +28,7 @@ export default function ForgotPasswordPage() {
                 <button type="submit">Send Reset Link</button>
             </form>
             {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
-             <p className={styles.link}>
+            <p className={styles.link}>
                 <Link to="/auth">Back to Login</Link>
             </p>
         </div>

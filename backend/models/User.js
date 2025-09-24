@@ -25,6 +25,7 @@ const userSchema = new mangoose.Schema({
 
     role : {
         type : String ,
+        enum: ['user', 'admin', 'superAdmin'],
         default : "user" ,
         require : true ,
     },
@@ -39,7 +40,6 @@ const userSchema = new mangoose.Schema({
         }
     ],
 
-}); 
+}, { timestamps: true }); 
 
-// The last will create a table name as <User> through userSchema 
 module.exports = mangoose.model( "User" , userSchema ) ;

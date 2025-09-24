@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const authenticate = require("../middlewares/authenticate");
-const checkAdmin = require("../middlewares/checkAdmin");
+const verifyAdmin = require("../middlewares/verifyAdmin");
 const adminControllers = require("../controllers/adminControllers");
 
 router.use(authenticate);
-router.use(checkAdmin);
+router.use(verifyAdmin);
 
 router.get('/', adminControllers.listProblems);
 router.post('/problems/draft', adminControllers.createDraft);

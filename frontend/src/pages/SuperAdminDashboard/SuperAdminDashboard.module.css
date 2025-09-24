@@ -1,0 +1,24 @@
+.dashboardContainer {
+    padding: 2rem 4rem;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+@media (max-width: 1200px) {
+    .dashboardContainer {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboardContainer {
+        padding: 0.5rem;
+    }
+}

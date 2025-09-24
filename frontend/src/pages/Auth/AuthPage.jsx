@@ -57,7 +57,7 @@ export default function AuthPage() {
                         <input type="password" name="password" placeholder="Password" value={userData.password} onChange={handleChange} required />
                     </>
                 )}
-                
+
                 <button type="submit">
                     {formState === 'login' ? 'Login' : formState === 'register' ? 'Get OTP' : 'Verify & Register'}
                 </button>

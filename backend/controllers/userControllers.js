@@ -83,7 +83,17 @@ const logoutUser = (req, res) => {
 };
 
 const getLoginStatus = (req, res) => {
-    res.status(200).json(req.user);
+    if (req.user) {
+        res.status(200).json({
+            isLogin: true,
+            role: req.user.role || 'user'
+        });
+    } else {
+        res.status(200).json({
+            isLogin: false,
+            role: null
+        });
+    }
 };
 
 const forgotPassword = async (req, res) => {
@@ -132,7 +142,7 @@ module.exports = {
     verifyOtpAndRegister,
     loginUser,
     logoutUser,
-    getLoginStatus ,
+    getLoginStatus,
     forgotPassword,
     resetPassword,
 };
